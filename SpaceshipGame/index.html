@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Spaceship Game</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <script src="js/player.js"></script>
+    <script src="js/stars.js"></script>
+    <script src="js/asteroids.js"></script>
+    <script src="js/shiptileset.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <canvas width="720" height="720" id="game-canvas"></canvas>
+    <div class="infoBox">
+      <div class="radialBox">
+        <label class="switch">
+          <input
+            type="checkbox"
+            id="myCheck"
+            onclick="checkDevInfo()"
+            checked
+          />
+          <span class="slider round"></span>
+        </label>
+        <h2 class="radialText" id="showDevInfoState"></h2>
+      </div>
+      <h2>Player Angle: <span id="printAngle"></span></h2>
+      <h2>Player xSpeed: <span id="printxSpeed"></span></h2>
+      <h2>Player ySpeed: <span id="printySpeed"></span></h2>
+      <h2>Player xpos: <span id="printxpos"></span></h2>
+      <h2>Player ypos: <span id="printypos"></span></h2>
+      <h2>Player Collided: <span id="isCollide"></span></h2>
+      <h2>STAR ySpeed: <span id="STARprintySpeed"></span></h2>
+    </div>
+  </body>
+</html>

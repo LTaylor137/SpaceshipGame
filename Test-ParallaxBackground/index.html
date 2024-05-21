@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas width="720" height="720" id="canvas"></canvas>
+
+    <!-- <h1>FarList.length: <span id="FarList.length"></span></h1>
+    <h1>MidList.length: <span id="MidList.length"></span></h1>
+    <h1>NearList.length: <span id="NearList.length"></span></h1> -->
+
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var i = 0;
+      var speed = 500; // this affect distance traveled, not speed.
+      var starsFarList = [];
+      var starsMidList = [];
+      var starsNearList = [];
+      var newStartPosition = 0;
+      var ySpeed = 1;
+      var xSpeed = -1;
+
+      var getRandomColour = function () {
+        var randomBetween = (min, max) =>
+          min + Math.floor(Math.random() * (max - min));
+        var r = randomBetween(200, 255);
+        var g = randomBetween(200, 255);
+        var b = randomBetween(230, 255);
+        var rgb = `rgb(${r},${g},${b})`;
+        return rgb;
+      };
+
+      var createFarStars = function () {
+        for (var i = 0; starsFarList.length < 1000; i++) {
+          starSize = Math.random() * (0.1, 2);
+          starXPos = Math.random() * (0, 3160);
+          starYPos = Math.random() * (0, 720);
+          const star = {
+            x: starXPos + -1720,
+            y: starYPos + newStartPosition,
+            starSize: starSize,
+            starColour: getRandomColour()
+          };
+          starsFarList.push(star);
+          //  document.getElementById("FarList.length").innerHTML = starsFarList.length
+        }
+      };
+
+      var createMidStars = function () {
+        for (var i = 0; starsMidList.length < 500; i++) {
+          starSize = Math.random() * (0.5, 2);
+          starXPos = Math.random() * (0, 2160);
+          starYPos = Math.random() * (0, 720);
+          const star = {
+            x: starXPos + -720,
+            y: starYPos + newStartPosition,
+            starSize: starSize,
+            starColour: getRandomColour()
+          };
+          starsMidList.push(star);
+          //  document.getElementById("MidList.length").innerHTML = starsMidList.length
+        }
+      };
+
+      var createNearStars = function () {
+        for (var i = 0; starsNearList.length < 250; i++) {
+          starSize = Math.random() * (1, 4);
+          starXPos = Math.random() * (0, 2160);
+          starYPos = Math.random() * (0, 720);
+          const star = {
+            x: starXPos + -720,
+            y: starYPos + newStartPosition,
+            starSize: starSize,
+            starColour: getRandomColour()
+          };
+          starsNearList.push(star);
+          //  document.getElementById("NearList.length").innerHTML = starsNearList.length
+        }
+      };
+
+      //draw the star in its current position.
+      var drawFarStar = function (x, y, size, colour) {
+        ctx.fillStyle = colour;
+        ctx.fillRect(x, y, size, size, 0);
+      };
+
+      var drawMidStar = function (x, y, size, colour) {
+        ctx.fillStyle = colour;
+        ctx.fillRect(x, y, size, size, 0);
+      };
+
+      var drawNearStar = function (x, y, size, colour) {
+        ctx.fillStyle = colour;
+        ctx.fillRect(x, y, size, size, 0);
+      };
+
+      var drawCanvas = function () {
+        //draw the canvas
+        ctx.fillStyle = "rgb(20, 20, 20)";
+        ctx.fillRect(0, 0, 720, 720);
+        window.requestAnimationFrame(drawCanvas);
+      };
+
+      var render = function () {
+        // update the stars position
+        for (var i = 0; i < starsFarList.length; i++) {
+          drawFarStar(
+            (starsFarList[i].x += xSpeed * 0.25),
+            (starsFarList[i].y += ySpeed * 0.25),
+            starsFarList[i].starSize,
+            starsFarList[i].starColour
+          );
+          if (this.starsFarList[i].y > 750) {
+            newStartPosition = -750;
+            starsFarList.splice(i, 1);
+            createFarStars();
+          }
+        }
+        for (var i = 0; i < starsMidList.length; i++) {
+          drawMidStar(
+            (starsMidList[i].x += xSpeed * 0.5),
+            (starsMidList[i].y += ySpeed * 0.5),
+            starsMidList[i].starSize,
+            starsMidList[i].starColour
+          );
+          if (this.starsMidList[i].y > 750) {
+            newStartPosition = -750;
+            starsMidList.splice(i, 1);
+            createMidStars();
+          }
+        }
+        for (var i = 0; i < starsNearList.length; i++) {
+          drawNearStar(
+            (starsNearList[i].x += xSpeed * 1),
+            (starsNearList[i].y += ySpeed * 1),
+            starsNearList[i].starSize,
+            starsNearList[i].starColour
+          );
+          if (this.starsNearList[i].y > 750) {
+            newStartPosition = -750;
+            starsNearList.splice(i, 1);
+            createNearStars();
+          }
+        }
+        window.requestAnimationFrame(render); // call render again in about 33ms
+      };
+
+      drawCanvas();
+      render(); // call render for the first time
+      createFarStars();
+      createMidStars();
+      createNearStars();
+    </script>
+  </body>
+</html>

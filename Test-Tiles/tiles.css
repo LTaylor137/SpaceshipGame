@@ -1,0 +1,143 @@
+html{
+  background-color: rgb(9, 7, 24);
+  color: white;
+  margin: 0;
+}
+
+.flexcol {
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  /* width: 300px; */
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* width: 300px; */
+}
+
+.x {
+/* width: auto; */
+height: 0%;
+margin: 1%;
+transform: rotate(0deg);
+background-color: rgba(255, 255, 255, 0.055);
+}
+
+.TileEmpty {
+  width: 30px;
+  height: 30px;
+}
+
+.Tile {
+  background-color: rgb(136, 128, 128);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.TRclip {
+  clip-path: polygon(0 0, 85% 15%, 100% 100%, 0% 100%);
+}
+
+.TLclip {
+  clip-path: polygon(15% 15%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.BRclip {
+  clip-path: polygon(0 0, 100% 0, 85% 85%, 0 100%);
+}
+
+.BLclip {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 85%);
+}
+
+.TLOnly {
+  clip-path: polygon(0 0, 100% 0%, 15% 15%, 0% 100%);
+}
+
+.TROnly {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 75% 15%);
+}
+
+.BLOnly {
+  clip-path: polygon(0 0, 15% 85%, 100% 100%, 0%100%);
+}
+
+.BROnly {
+  clip-path: polygon(100% 100%, 0% 100%, 75% 85%, 100% 0);
+}
+
+.LeftIndentclip {
+  clip-path: polygon(0 0, 100% 0, 80% 50%, 100% 100%, 0 100%);
+}
+
+.RightIndentclip {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 20% 50%);
+}
+
+.BottomIndentclip {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.TopIndentclip {
+  clip-path: polygon(0 0, 50% 20%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.bevelrightclip {
+clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 0% 100%);
+}
+
+.bevelleftclip {
+  clip-path: polygon(20% 0%,100% 0%, 100% 100%, 20% 100%, 0% 80%, 0% 20%);
+}
+  
+.shortnoseclip {
+  clip-path: polygon(50% 25%, 90% 45%, 100% 100%, 0 100%, 10% 45%);
+}
+
+.longnoseclip {
+  clip-path: polygon(50% 0, 85% 15%, 100% 100%, 0 100%, 15% 15%);
+}
+
+.engineclip {
+  clip-path: polygon(100% 0, 100% 40%, 80% 100%, 20% 100%, 0 40%, 0% 0%);
+}
+
+.windowClip {
+  clip-path: polygon(30% 55%, 50% 45%, 70% 55%, 75% 80%, 50% 75%, 25% 80%);
+  z-index: 5;
+}
+
+.window2Clip {
+  clip-path: polygon(15% 15%, 80% 15%, 85% 35%, 10% 35%);
+  z-index: 5;
+}
+
+.window {
+  background-color: rgb(2, 26, 31);
+  width: 30px;
+  height: 30px;
+  z-index: 6;
+}
+
+.gunLrg {
+  width: 70%;
+  height: 70%;
+  border-radius: 100%;
+  background-color: rgb(170, 39, 39);
+  z-index: 3;
+}
+
+.gunSml {
+    width: 40%;
+    height: 40%;
+    border-radius: 100%;
+    background-color: rgb(170, 39, 39);
+    z-index: 3;
+  }
