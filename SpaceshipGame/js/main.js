@@ -3,7 +3,7 @@ console.log("main.js loaded");
 // drawing variable
 var canvas;
 var context;
-var showDevInfo = true;
+var showDevInfo = false;
 
 //game variables
 var gameLoop;

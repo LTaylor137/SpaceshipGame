@@ -24,7 +24,7 @@ function Player(x, y) {
   };
 
   this.array = [
-    //top row
+    //top row 0
     {
       xoffset: this.width / -2,
       yoffset: this.height / -2 - 30,
@@ -33,10 +33,11 @@ function Player(x, y) {
       tile: "nose",
       damage: 0,
       maxDamage: 4,
+      neighborTiles: [3],
       smokeParticles: [],
       fireParticles: [],
     },
-    //middle row
+    //middle row 1
     {
       xoffset: this.width / -2 - 60,
       yoffset: this.height / -2,
@@ -46,6 +47,7 @@ function Player(x, y) {
       smokeParticles: [],
       fireParticles: [],
     },
+    //2
     {
       xoffset: this.width / -2 - 30,
       yoffset: this.height / -2,
@@ -54,9 +56,11 @@ function Player(x, y) {
       tile: "wing-left",
       damage: 0,
       maxDamage: 4,
+      neighborTiles: [3],
       smokeParticles: [],
       fireParticles: [],
     },
+    //3
     {
       xoffset: this.width / -2,
       yoffset: this.height / -2,
@@ -65,9 +69,11 @@ function Player(x, y) {
       tile: "body",
       damage: 0,
       maxDamage: 4,
+      neighborTiles: [0, 2, 4],
       smokeParticles: [],
       fireParticles: [],
     },
+    //4
     {
       xoffset: this.width / -2 + 30,
       yoffset: this.height / -2,
@@ -76,9 +82,11 @@ function Player(x, y) {
       tile: "wing-right",
       damage: 0,
       maxDamage: 4,
+      neighborTiles: [3],
       smokeParticles: [],
       fireParticles: [],
     },
+    //5
     {
       xoffset: this.width / -2 + 60,
       yoffset: this.height / -2,
@@ -88,7 +96,7 @@ function Player(x, y) {
       smokeParticles: [],
       fireParticles: [],
     },
-    //bottom row
+    //bottom row 6
     {
       xoffset: this.width / -2,
       yoffset: this.height / -2 + 30,
@@ -188,18 +196,25 @@ function Player(x, y) {
           switch (this.damage) {
             case 1:
               this.smokeColour = this.random(190, 200);
+              this.smokeLife = 70;
               break;
             case 2:
               this.smokeColour = this.random(160, 170);
+              this.smokeLife = 50;
+
               break;
             case 3:
               this.smokeColour = this.random(100, 130);
+              this.smokeLife = 30;
+
               break;
             case 4:
               this.smokeColour = this.random(50, 80);
+              this.smokeLife = 10;
               break;
             default:
               this.smokeColour = this.random(20, 50);
+              this.smokeLife = 70;
               break;
           }
           const smokeParticle = {
@@ -209,7 +224,7 @@ function Player(x, y) {
             yvel: this.random(0, 0.1),
             size: this.random(5, 13),
             colour: `rgb(${this.smokeColour}, ${this.smokeColour}, ${this.smokeColour})`,
-            life: this.random(20, 100),
+            life: this.random(this.smokeLife, 100),
           };
           tile.smokeParticles.push(smokeParticle);
         }
@@ -225,7 +240,7 @@ function Player(x, y) {
               100,
               230
             )}, 50)`,
-            life: this.random(20, 100),
+            life: this.random(this.smokeLife, 100),
           };
           tile.fireParticles.push(fireParticle);
         }
@@ -398,7 +413,6 @@ function Player(x, y) {
         }
       });
     }
-
   };
 
   // player take damage
@@ -410,6 +424,18 @@ function Player(x, y) {
     } else {
       if (this.array[location].damage < this.array[location].maxDamage) {
         this.array[location].damage = this.array[location].damage + aDamage;
+      } else if (
+        (this.array[location].damage = this.array[location].maxDamage)
+      ) {
+        getRandomNeighborTile = Math.floor(
+          Math.random() * this.array[location].neighborTiles.length
+        );
+        neighborTile =
+          this.array[location].neighborTiles[getRandomNeighborTile];
+        if (this.array[neighborTile].damage < this.array[neighborTile].maxDamage) {
+          this.array[neighborTile].damage =
+            this.array[neighborTile].damage + aDamage;
+        }
       }
     }
   };
