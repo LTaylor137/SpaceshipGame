@@ -71,12 +71,14 @@ function Asteroids() {
     context.restore();
   };
 
-  this.destroyAsteroid = function (asteroid) {
+  this.destroyAsteroid = function (asteroid, xSpeed, ySpeed) {
     pxpos = asteroid.x;
     pypos = asteroid.y;
+    sxSpeed = xSpeed
+    sySpeed = ySpeed
 
     //create particles
-    for (let i = 0; i < asteroid.size*2; i += 1) {
+    for (let i = 0; i < asteroid.size; i += 1) {
       const particle = {
         x: pxpos + this.random(-asteroid.size / 3, asteroid.size / 3),
         y: pypos + this.random(-5, asteroid.size / 2),
@@ -87,17 +89,34 @@ function Asteroids() {
       };
       this.particles.push(particle);
     }
+    //create more rocks travelling in direction of ship
+    for (let i = 0; i < asteroid.size/4; i += 1) {
+      const particle = {
+        x: pxpos + this.random(-asteroid.size / 3, asteroid.size / 3),
+        y: pypos + this.random(-5, asteroid.size / 2),
+        xvel: asteroid.xDirection * Math.random() + this.random(-1, 1) + sxSpeed/2,
+        yvel: Math.random() + this.random(-1, 1) + sySpeed/2-0.5,
+        size: this.random(5, 15),
+        life: this.random(0, 50),
+      };
+      this.particles.push(particle);
+    }
   };
 
   // update the asteroid + particle position
-  this.render = function (shipYSpeed, shipXSpeed) {
+  this.render = function (shipYSpeed, shipXSpeed, shipYPos) {
     //take the players ship speed
+  
     if (shipXSpeed <= 10 && shipXSpeed >= -10) {
       asteroidXSpeed = -shipXSpeed;
     }
-    if (shipYSpeed <= 0.5 && shipYSpeed >= -1) {
+
+    // if (shipYPos >= 640 && shipYSpeed >= 2) {
+    //   asteroidYSpeed = -shipYSpeed +7;}
+    // else 
+    if (shipYSpeed <= 0.5 && shipYSpeed >= -1 && shipYPos < 640) {
       asteroidYSpeed = -shipYSpeed + 4;
-    }
+    } 
     //draw asteroids
     for (var i = 0; i < this.asteroidsList.length; i++) {
       this.drawAsteroid(

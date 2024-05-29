@@ -12,9 +12,10 @@ function Player(x, y) {
   this.height = 30;
   this.active = true;
   this.count = 0;
-  this.shieldValue = 0;
-  this.shieldMaxValue = 2;
+  this.shieldValue = 3;
+  this.shieldMaxValue = 4;
   this.shieldCounter = 0;
+  this.shieldColour = "lightblue";
 
   // this.smokeParticles = [];
   // this.fireParticles = [];
@@ -196,17 +197,15 @@ function Player(x, y) {
           switch (this.damage) {
             case 1:
               this.smokeColour = this.random(190, 200);
-              this.smokeLife = 70;
+              this.smokeLife = 80;
               break;
             case 2:
               this.smokeColour = this.random(160, 170);
               this.smokeLife = 50;
-
               break;
             case 3:
               this.smokeColour = this.random(100, 130);
               this.smokeLife = 30;
-
               break;
             case 4:
               this.smokeColour = this.random(50, 80);
@@ -311,16 +310,16 @@ function Player(x, y) {
       context.restore();
     });
 
+  
     //draw shield
     if (this.shieldValue >= 1) {
-      context.strokeStyle = "lightblue";
+      context.strokeStyle = this.shieldColour;
       context.beginPath();
       context.globalAlpha = 0.7;
       context.lineWidth = 2;
       context.arc(this.x, this.y, 54, 0, 2 * Math.PI);
       context.closePath();
       context.stroke();
-      context.strokeStyle = "lightblue";
       context.globalAlpha = 0.25;
       context.beginPath();
       context.lineWidth = 5;
@@ -330,14 +329,13 @@ function Player(x, y) {
       context.globalAlpha = 1;
     }
     if (this.shieldValue >= 2) {
-      context.strokeStyle = "lightblue";
+      context.strokeStyle = this.shieldColour;
       context.globalAlpha = 0.4;
       context.beginPath();
       context.lineWidth = 10;
       context.arc(this.x, this.y, 50, 0, 2 * Math.PI);
       context.closePath();
       context.stroke();
-      context.strokeStyle = "lightblue";
       context.globalAlpha = 0.2;
       context.beginPath();
       context.lineWidth = 4;
@@ -349,7 +347,7 @@ function Player(x, y) {
     if (this.shieldValue === 3) {
       context.beginPath();
       context.globalAlpha = 0.3;
-      context.fillStyle = "lightblue";
+      context.fillStyle = this.shieldColour;
       context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
       context.fill();
       context.globalAlpha = 1;
@@ -369,8 +367,18 @@ function Player(x, y) {
       //draw smokeParticles
       for (let i = 0; i < tile.smokeParticles.length; i += 1) {
         p = tile.smokeParticles[i];
-        p.x = p.x + tile.xoffset / tile.xpos;
-        p.y = p.y + tile.yoffset / tile.ypos;
+        if (this.x <= 80 ||this.x >= 640 ) {
+        p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed;
+        }else{
+          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed/2;
+        }
+        if (this.y >= 640) {
+          p.y = p.y + tile.yoffset / tile.ypos +2 + this.ySpeed/4;
+        } else if (this.y <= 80) {
+          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed/2;
+        } else {
+          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed/4;
+        }
         p.life = p.life + 1;
         context.fillStyle = p.colour;
         context.fillRect(p.x, p.y, p.size, p.size);
@@ -381,8 +389,8 @@ function Player(x, y) {
       //draw fireParticles
       for (let i = 0; i < tile.fireParticles.length; i += 1) {
         p = tile.fireParticles[i];
-        p.x = p.x + tile.xoffset / tile.xpos;
-        p.y = p.y + tile.yoffset / tile.ypos;
+        p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed/2;
+        p.y = p.y + tile.yoffset / tile.ypos + 1;
         p.life = p.life + 1;
         context.fillStyle = p.colour;
         context.fillRect(p.x, p.y, p.size, p.size);
@@ -421,6 +429,22 @@ function Player(x, y) {
     if (this.shieldValue >= 1) {
       //console.log("shield hit!");
       this.shieldValue = this.shieldValue - 1;
+      this.shieldColour = "red"
+      setTimeout(() => {
+        this.shieldColour = "lightblue"
+      }, 100);
+      setTimeout(() => {
+        this.shieldColour = "red"
+      }, 300);
+      setTimeout(() => {
+        this.shieldColour = "lightblue"
+      }, 400);
+      setTimeout(() => {
+        this.shieldColour = "red"
+      }, 600);
+      setTimeout(() => {
+        this.shieldColour = "lightblue"
+      }, 700);
     } else {
       if (this.array[location].damage < this.array[location].maxDamage) {
         this.array[location].damage = this.array[location].damage + aDamage;
@@ -432,7 +456,9 @@ function Player(x, y) {
         );
         neighborTile =
           this.array[location].neighborTiles[getRandomNeighborTile];
-        if (this.array[neighborTile].damage < this.array[neighborTile].maxDamage) {
+        if (
+          this.array[neighborTile].damage < this.array[neighborTile].maxDamage
+        ) {
           this.array[neighborTile].damage =
             this.array[neighborTile].damage + aDamage;
         }

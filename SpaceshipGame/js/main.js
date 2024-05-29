@@ -100,7 +100,7 @@ function checkPlayerCollision() {
         if (shipTiles[i].damage !== null) {
           shipTile = shipTiles[i];
           asteroidNo = asteroids.asteroidsList[a];
-          asteroids.destroyAsteroid(asteroidNo);
+          asteroids.destroyAsteroid(asteroidNo, player.xSpeed, player.ySpeed);
           document.getElementById("isCollide").innerHTML = i;
           player.takeDamage(i, asteroidNo.damage);
           asteroids.asteroidsList.splice(a, 1);
@@ -110,17 +110,6 @@ function checkPlayerCollision() {
   }
 }
 
-//pass ship speed to stars object
-function getShipYSpeed() {
-  var shipYSpeed = this.player.ySpeed;
-  return shipYSpeed;
-}
-
-function getShipXSpeed() {
-  var shipXSpeed = this.player.xSpeed;
-  return shipXSpeed;
-}
-
 //draw everything
 function draw() {
   //clear the canvas
@@ -128,13 +117,13 @@ function draw() {
   context.fillRect(0, 0, 720, 720);
 
   //draw stars
-  stars.render(getShipYSpeed(), getShipXSpeed());
+  stars.render(this.player.ySpeed, this.player.xSpeed);
 
   //draw player
   player.draw();
 
   //draw asteroids
-  asteroids.render(getShipYSpeed(), getShipXSpeed());
+  asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);
   // asteroids.drawParticles()
 
   //draw bullets
