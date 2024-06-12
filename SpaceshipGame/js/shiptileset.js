@@ -1,24 +1,52 @@
-function Shiptileset() {
-  this.draw = function (tile, x, y) {
+
+_drawNose = function (context, x, y)  {
+  context.beginPath();
+  context.fillStyle = "lightgrey";
+  context.lineTo(x + 2, y + 8);
+  context.lineTo(x + 15, y);
+  context.lineTo(x + 28, y + 8);
+  context.lineTo(x + 30, y + 30);
+  context.lineTo(x, y + 30);
+  context.closePath();
+  context.fill();
+  context.beginPath();
+  context.fillStyle = "black";
+  context.lineTo(x + 5, y + 12);
+  context.lineTo(x + 15, y + 7);
+  context.lineTo(x + 25, y + 12);
+  context.lineTo(x + 26, y + 20);
+  context.lineTo(x + 4, y + 20);
+  context.closePath();
+  context.fill();
+}
+
+const Shiptileset = {
+
+  drawTile(tile, context, x, y) {
+
+    switch(tile) {
+      case 'nose': _drawTileNose(context, x,y)
+      case 'body': _drawTileBody(context, x,y)
+      case 'wing-left': _drawTileWingLeft(context, x,y)
+    }
+  }
+}
+
+
+function oldShiptileset() {
+  
+
+  this.drawTile = function (tile, context, x, y) {
+
+    switch(tile) {
+      case 'nose': this._drawNose(context, x,y)
+      case 'body': this._drawBody(context, x,y)
+      case 'wing-left': this._drawWingLeft(context, x,y)
+    }
+
     if (tile === "nose") {
-      context.beginPath();
-      context.fillStyle = "lightgrey";
-      context.lineTo(x + 2, y + 8);
-      context.lineTo(x + 15, y);
-      context.lineTo(x + 28, y + 8);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x, y + 30);
-      context.closePath();
-      context.fill();
-      context.beginPath();
-      context.fillStyle = "black";
-      context.lineTo(x + 5, y + 12);
-      context.lineTo(x + 15, y + 7);
-      context.lineTo(x + 25, y + 12);
-      context.lineTo(x + 26, y + 20);
-      context.lineTo(x + 4, y + 20);
-      context.closePath();
-      context.fill();
+      drawNose(x, y)
+
     } else if (tile === "body") {
       context.beginPath();
       context.fillStyle = "lightgrey";

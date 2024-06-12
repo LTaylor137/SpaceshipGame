@@ -1,4 +1,31 @@
-function Player(x, y) {
+
+// class Player {
+
+//   _secret(b) {
+
+//   }
+
+//   random(min, max) {
+
+//     this._secret(...)
+
+//     return ....
+//   }
+
+//   update(...) {
+
+//   }
+// }
+
+const MySpecialNumber = 30;
+
+ function randomRange(min, max) {
+  assert.isANumber(min)
+
+  const r = Math.random() * (max - min) + min;
+};
+
+function Player(x, y, keyStates) {
   this.x = x;
   this.y = y;
   this.acceleration = 0.05;
@@ -13,9 +40,10 @@ function Player(x, y) {
   this.active = true;
   this.count = 0;
   this.shieldValue = 3;
-  this.shieldMaxValue = 4;
+  this.shieldMaxValue = 2;
   this.shieldCounter = 0;
   this.shieldColour = "lightblue";
+  this.keyStates = keyStates
 
   // this.smokeParticles = [];
   // this.fireParticles = [];
@@ -122,7 +150,7 @@ function Player(x, y) {
         this.xSpeed *= this.friction;
         this.angle *= this.friction;
       } else if (leftKey) {
-        //move right
+        //move left
         if (this.xSpeed >= -this.maxSpeed) {
           this.xSpeed -= this.acceleration;
         }
@@ -257,7 +285,7 @@ function Player(x, y) {
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
       context.rotate(this.angle);
-      shiptileset.draw(element.tile, element.xoffset, element.yoffset);
+      Shiptileset.drawTile(element.tile, context, element.xoffset, element.yoffset);
 
       //engine booster up down
       if (element.tile == "booster") {
