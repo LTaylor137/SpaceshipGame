@@ -10,16 +10,16 @@ var gameLoop;
 var player;
 
 //input variables
-const keyStates = {
-  upKey: false,
-  downKey: false,
-  leftKey : false,
-  rightKey: false
-}
-// var upKey;
-// var downKey;
-// var leftKey;
-// var rightKey;
+// const keyStates = {
+//   upKey: false,
+//   downKey: false,
+//   leftKey : false,
+//   rightKey: false
+// }
+var upKey;
+var downKey;
+var leftKey;
+var rightKey;
 var shipTiles = [];
 var isCollide = false;
 
@@ -30,7 +30,8 @@ window.onload = function () {
   context = canvas.getContext("2d");
   setupInputs();
   //create objects
-  player = new Player(350, 600, keyStates);
+  player = new Player(350, 600);
+    // , keyStates);
   shiptileset = new Shiptileset();
   stars = new Stars();
   asteroids = new Asteroids();
@@ -58,11 +59,11 @@ function checkDevInfo() {
 const isUp = k => k === "a" || k === "ArrowUp";
 
 
-//Keyboard inputs
+//Keyboard inputs ORIGINAL
 function setupInputs() {
   document.addEventListener("keydown", function (event) {
-    if (isUp(event.key)) {
-      keyStates.upKey = true;
+    if (event.key === "w" || event.key === "ArrowUp") {
+      upKey = true;
     } else if (event.key === "a" || event.key === "ArrowLeft") {
       leftKey = true;
     } else if (event.key === "s" || event.key === "ArrowRight") {
@@ -72,7 +73,7 @@ function setupInputs() {
     }
   });
   document.addEventListener("keyup", function (event) {
-    if (isUp(event.key)) {
+    if (event.key === "w" || event.key === "ArrowUp") {
       upKey = false;
     } else if (event.key === "a" || event.key === "ArrowLeft") {
       leftKey = false;
@@ -83,6 +84,32 @@ function setupInputs() {
     }
   });
 }
+
+//Keyboard inputs NEW
+// function setupInputs() {
+//   document.addEventListener("keydown", function (event) {
+//     if (isUp(event.key)) {
+//       keyStates.upKey = true;
+//     } else if (event.key === "a" || event.key === "ArrowLeft") {
+//       leftKey = true;
+//     } else if (event.key === "s" || event.key === "ArrowRight") {
+//       downKey = true;
+//     } else if (event.key === "d" || event.key === "ArrowDown") {
+//       rightKey = true;
+//     }
+//   });
+//   document.addEventListener("keyup", function (event) {
+//     if (isUp(event.key)) {
+//       upKey = false;
+//     } else if (event.key === "a" || event.key === "ArrowLeft") {
+//       leftKey = false;
+//     } else if (event.key === "s" || event.key === "ArrowRight") {
+//       downKey = false;
+//     } else if (event.key === "d" || event.key === "ArrowDown") {
+//       rightKey = false;
+//     }
+//   });
+// }
 
 //update positions
 function update() {

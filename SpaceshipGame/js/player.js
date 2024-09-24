@@ -17,13 +17,13 @@
 //   }
 // }
 
-const MySpecialNumber = 30;
+// const MySpecialNumber = 30;
 
- function randomRange(min, max) {
-  assert.isANumber(min)
+//  function randomRange(min, max) {
+//   assert.isANumber(min)
 
-  const r = Math.random() * (max - min) + min;
-};
+//   const r = Math.random() * (max - min) + min;
+// };
 
 function Player(x, y, keyStates) {
   this.x = x;
@@ -40,7 +40,7 @@ function Player(x, y, keyStates) {
   this.active = true;
   this.count = 0;
   this.shieldValue = 3;
-  this.shieldMaxValue = 2;
+  this.shieldMaxValue = 4;
   this.shieldCounter = 0;
   this.shieldColour = "lightblue";
   this.keyStates = keyStates
@@ -285,7 +285,8 @@ function Player(x, y, keyStates) {
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
       context.rotate(this.angle);
-      Shiptileset.drawTile(element.tile, context, element.xoffset, element.yoffset);
+      shiptileset.drawTile(element.tile, element.xoffset, element.yoffset);
+      // Shiptileset.drawTile(element.tile, context, element.xoffset, element.yoffset);
 
       //engine booster up down
       if (element.tile == "booster") {
