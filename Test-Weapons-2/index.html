@@ -1,0 +1,91 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Gun Turret Game</title>  
+    <style>  
+        canvas { background: #eee; display: block; margin: auto; }  
+    </style>  
+</head>  
+<body>  
+    <canvas id="gameCanvas" width="800" height="600"></canvas>  
+    <script>  
+        const canvas = document.getElementById("gameCanvas");  
+        const ctx = canvas.getContext("2d");  
+
+        let turretX = canvas.width / 2;  
+        let turretY = canvas.height - 150;  
+        let angle = 0;  
+        let bullets = [];  
+
+        // Mouse position  
+        let mouseX = turretX;  
+        let mouseY = turretY;  
+
+        // Bullet class  
+        class Bullet {  
+            constructor(x, y, angle) {  
+                this.x = x;  
+                this.y = y;  
+                this.angle = angle;  
+                this.speed = 10;  
+            }  
+
+            update() {  
+                this.x += Math.cos(this.angle) * this.speed;  
+                this.y += Math.sin(this.angle) * this.speed;  
+            }  
+
+            draw() {  
+                ctx.fillStyle = "red";  
+                ctx.beginPath();  
+                ctx.arc(this.x, this.y, 50, 50, Math.PI * 2);  
+                ctx.fill();  
+            }  
+        }  
+
+        canvas.addEventListener('mousemove', (e) => {  
+            mouseX = e.clientX - canvas.offsetLeft;  
+            mouseY = e.clientY - canvas.offsetTop;  
+            angle = Math.atan2(mouseY - turretY, mouseX - turretX);  
+        });  
+
+        canvas.addEventListener('mousedown', () => {  
+            bullets.push(new Bullet(turretX, turretY, angle));  
+        });  
+
+        function drawTurret() {  
+            ctx.save();  
+            ctx.translate(turretX, turretY);  
+            ctx.rotate(angle);  
+            ctx.fillStyle = "#333";  
+            ctx.fillRect(0, -5, 40, 10);  
+            ctx.restore();  
+        }  
+
+        function update() {  
+            bullets.forEach((bullet, index) => {  
+                bullet.update();  
+                if (bullet.x < 0 || bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) {  
+                    bullets.splice(index, 1); // Remove bullet if it goes out of bounds  
+                }  
+            });  
+        }  
+
+        function draw() {  
+            ctx.clearRect(0, 0, canvas.width, canvas.height);  
+            drawTurret();  
+            bullets.forEach(bullet => bullet.draw());  
+        }  
+
+        function gameLoop() {  
+            update();  
+            draw();  
+            requestAnimationFrame(gameLoop);  
+        }  
+
+        gameLoop();  
+    </script>  
+</body>  
+</html>

@@ -1,0 +1,49 @@
+body
+{
+background:black;
+}
+
+.turret
+{
+  padding:10px;
+  background:white;
+  position:fixed;
+  margin:auto;
+  bottom:0;
+  left:0;
+  right:0;
+  width:15px;
+  border-radius:10px 10px 0px 0px;
+}
+
+.gun
+{
+  background:white;
+  padding:0px;
+  height:40px;
+  position:absolute;
+  width:4px;
+  bottom: 10px;
+  left:15px;
+  right:0;
+  transform-origin:0% 100%;
+  -ms-transform-origin:0% 100%; /* IE 9 */
+  -webkit-transform-origin:0% 100%; /* Safari and Chrome */
+  -moz-transform-origin:0% 100%; /* Firefox */
+  -o-transform-origin:0% 100%; /* Opera */
+}
+
+.bullet
+{
+  background:white;
+  padding:0px;
+  height:5px;
+  position:absolute;
+  width:2px;
+  margin:auto;
+  transform-origin:0% 100%;
+  -ms-transform-origin:0% 100%; /* IE 9 */
+  -webkit-transform-origin:0% 100%; /* Safari and Chrome */
+  -moz-transform-origin:0% 100%; /* Firefox */
+  -o-transform-origin:0% 100%; /* Opera */
+}

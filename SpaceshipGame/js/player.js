@@ -247,6 +247,20 @@ function Player(x, y) {
     }
   };
 
+  // turret variables
+  let angle = 0;  
+   // Mouse position  
+   let mouseX = this.x;  
+   let mouseY = this.y;  
+
+   //detect mouse pos
+   canvas.addEventListener('mousemove', (e) => {  
+    mouseX = e.clientX - canvas.offsetLeft;  
+    mouseY = e.clientY - canvas.offsetTop;  
+    angle = Math.atan2(mouseY - this.y, mouseX - this.x);  
+});  
+
+
   // draw the player position
   this.draw = function () {
     this.array.forEach((element) => {
@@ -258,6 +272,19 @@ function Player(x, y) {
       element.ypos = this.y + element.yoffset + this.height / 2;
       context.rotate(this.angle);
       shiptileset.draw(element.tile, element.xoffset, element.yoffset);
+      // function drawTurret() {  
+        context.save();  
+        // context.translate(turretX, turretY);  
+        context.rotate(angle);  
+        context.fillStyle = "#333"; 
+        context.fillRect(0, -5, 30, 10);    
+        context.restore();
+        context.fillStyle = "#333";  
+        context.beginPath();  
+        context.arc(0, 0, 12.5, 12.5, Math.PI * 360);  
+        context.fill();  
+    // }  
+    
 
       //engine booster up down
       if (element.tile == "booster") {
@@ -306,7 +333,6 @@ function Player(x, y) {
           );
         }
       }
-
       context.restore();
     });
 
