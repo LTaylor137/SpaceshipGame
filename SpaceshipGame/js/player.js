@@ -245,21 +245,71 @@ function Player(x, y) {
         }
       });
     }
+
+    bullets.forEach((bullet, index) => {
+      bullet.update();
+      if (
+        bullet.x < 0 ||
+        bullet.x > canvas.width ||
+        bullet.y < 0 ||
+        bullet.y > canvas.height
+      ) {
+        bullets.splice(index, 1); // Remove bullet if it goes out of bounds
+      }
+    });
   };
 
   // turret variables
-  let angle = 0;  
-   // Mouse position  
-   let mouseX = this.x;  
-   let mouseY = this.y;  
+  let turretX = canvas.width / 2;
+  let turretY = canvas.height - 150;
+  let angle = 0;
+  let bullets = [];
+  // Mouse position
+  let mouseX = this.x;
+  let mouseY = this.y;
 
-   //detect mouse pos
-   canvas.addEventListener('mousemove', (e) => {  
-    mouseX = e.clientX - canvas.offsetLeft;  
-    mouseY = e.clientY - canvas.offsetTop;  
-    angle = Math.atan2(mouseY - this.y, mouseX - this.x);  
-});  
+  // Bullet class
+  class Bullet {
+    constructor(x, y, angle) {
+      this.x = x;
+      this.y = y;
+      this.angle = angle;
+      this.speed = 10;
+    }
 
+    update() {
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+    }
+
+    draw() {
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  canvas.addEventListener("mousedown", () => {
+    bullets.push(new Bullet(turretX, turretY, angle));
+    console.log(bullets);
+  });
+
+  // function updateBullets() {
+  //   bullets.forEach((bullet, index) => {
+  //       bullet.update();
+  //       if (bullet.x < 0 || bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) {
+  //           bullets.splice(index, 1); // Remove bullet if it goes out of bounds
+  //       }
+  //   });
+  // }
+
+  //detect mouse pos
+  canvas.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX - canvas.offsetLeft;
+    mouseY = e.clientY - canvas.offsetTop;
+    angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+  });
 
   // draw the player position
   this.draw = function () {
@@ -267,24 +317,11 @@ function Player(x, y) {
       context.save();
       context.fillStyle = "grey";
       context.translate(this.x, this.y);
-      // this updates the position of for each tile by adding its individual offset
+      // this updates the position of each tile by adding its individual offset
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
       context.rotate(this.angle);
       shiptileset.draw(element.tile, element.xoffset, element.yoffset);
-      // function drawTurret() {  
-        context.save();  
-        // context.translate(turretX, turretY);  
-        context.rotate(angle);  
-        context.fillStyle = "#333"; 
-        context.fillRect(0, -5, 30, 10);    
-        context.restore();
-        context.fillStyle = "#333";  
-        context.beginPath();  
-        context.arc(0, 0, 12.5, 12.5, Math.PI * 360);  
-        context.fill();  
-    // }  
-    
 
       //engine booster up down
       if (element.tile == "booster") {
@@ -333,10 +370,22 @@ function Player(x, y) {
           );
         }
       }
+
+      // function drawTurret() {
+      context.save();
+      // context.translate(turretX, turretY);
+      context.rotate(angle);
+      context.fillStyle = "#666";
+      context.fillRect(0, -3.5, 20, 7);
+      context.restore();
+      context.fillStyle = "#666";
+      context.beginPath();
+      context.arc(0, 0, 10, 10, Math.PI * 360);
+      context.fill();
+
       context.restore();
     });
 
-  
     //draw shield
     if (this.shieldValue >= 1) {
       context.strokeStyle = this.shieldColour;
@@ -393,17 +442,17 @@ function Player(x, y) {
       //draw smokeParticles
       for (let i = 0; i < tile.smokeParticles.length; i += 1) {
         p = tile.smokeParticles[i];
-        if (this.x <= 80 ||this.x >= 640 ) {
-        p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed;
-        }else{
-          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed/2;
+        if (this.x <= 80 || this.x >= 640) {
+          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed;
+        } else {
+          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed / 2;
         }
         if (this.y >= 640) {
-          p.y = p.y + tile.yoffset / tile.ypos +2 + this.ySpeed/4;
+          p.y = p.y + tile.yoffset / tile.ypos + 2 + this.ySpeed / 4;
         } else if (this.y <= 80) {
-          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed/2;
+          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed / 2;
         } else {
-          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed/4;
+          p.y = p.y + tile.yoffset / tile.ypos + 2 - this.ySpeed / 4;
         }
         p.life = p.life + 1;
         context.fillStyle = p.colour;
@@ -415,7 +464,7 @@ function Player(x, y) {
       //draw fireParticles
       for (let i = 0; i < tile.fireParticles.length; i += 1) {
         p = tile.fireParticles[i];
-        p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed/2;
+        p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed / 2;
         p.y = p.y + tile.yoffset / tile.ypos + 1;
         p.life = p.life + 1;
         context.fillStyle = p.colour;
@@ -455,21 +504,21 @@ function Player(x, y) {
     if (this.shieldValue >= 1) {
       //console.log("shield hit!");
       this.shieldValue = this.shieldValue - 1;
-      this.shieldColour = "red"
+      this.shieldColour = "red";
       setTimeout(() => {
-        this.shieldColour = "lightblue"
+        this.shieldColour = "lightblue";
       }, 100);
       setTimeout(() => {
-        this.shieldColour = "red"
+        this.shieldColour = "red";
       }, 300);
       setTimeout(() => {
-        this.shieldColour = "lightblue"
+        this.shieldColour = "lightblue";
       }, 400);
       setTimeout(() => {
-        this.shieldColour = "red"
+        this.shieldColour = "red";
       }, 600);
       setTimeout(() => {
-        this.shieldColour = "lightblue"
+        this.shieldColour = "lightblue";
       }, 700);
     } else {
       if (this.array[location].damage < this.array[location].maxDamage) {
