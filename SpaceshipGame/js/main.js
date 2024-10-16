@@ -14,7 +14,7 @@ var upKey;
 var downKey;
 var leftKey;
 var rightKey;
-var shipTiles = [];
+var playerShipTiles = [];
 var isCollide = false;
 
 //runs once page has loaded
@@ -25,7 +25,7 @@ window.onload = function () {
   setupInputs();
   //create objects
   player = new Player(350, 600);
-  shiptileset = new Shiptileset();
+  shiptilegraphics = new Shiptilegraphics();
   stars = new Stars();
   asteroids = new Asteroids();
   //Start game loop
@@ -78,27 +78,28 @@ function setupInputs() {
 //update positions
 function update() {
   player.update();
+  // player.updateBullets();
   checkPlayerCollision();
   draw();
 }
 
-//detect collision with player
+//detect asteroid collision with player
 function checkPlayerCollision() {
-  for (var i = 0; i < shipTiles.length; i++) {
+  for (var i = 0; i < playerShipTiles.length; i++) {
     for (var a = 0; a < asteroids.asteroidsList.length; a++) {
       // console.log(asteroids.asteroidsList[a])
       if (
-        shipTiles[i].ypos + 15 >= //bottom of ship tile
+        playerShipTiles[i].ypos + 15 >= //bottom of ship tile
           asteroids.asteroidsList[a].y - asteroids.asteroidsList[a].size / 2 && //top of asteroid
-        shipTiles[i].ypos - 15 <= //top of ship tile
+        playerShipTiles[i].ypos - 15 <= //top of ship tile
           asteroids.asteroidsList[a].y + asteroids.asteroidsList[a].size / 2 && //bottom of asteroid
-        shipTiles[i].xpos + 15 >= // right of ship tile
+        playerShipTiles[i].xpos + 15 >= // right of ship tile
           asteroids.asteroidsList[a].x - asteroids.asteroidsList[a].size / 2 && // left side of asteroid
-        shipTiles[i].xpos - 15 <= // left of ship tile
+        playerShipTiles[i].xpos - 15 <= // left of ship tile
           asteroids.asteroidsList[a].x + asteroids.asteroidsList[a].size / 2 // right side of asteroid
       ) {
-        if (shipTiles[i].damage !== null) {
-          shipTile = shipTiles[i];
+        if (playerShipTiles[i].damage !== null) {
+          shipTile = playerShipTiles[i];
           asteroidNo = asteroids.asteroidsList[a];
           asteroids.destroyAsteroid(asteroidNo, player.xSpeed, player.ySpeed);
           document.getElementById("isCollide").innerHTML = i;
@@ -124,7 +125,7 @@ function draw() {
 
   //draw asteroids
   asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);
-  // asteroids.drawParticles()
+  asteroids.drawParticles()
 
   //draw bullets
   // context.fillStyle = "red";

@@ -17,14 +17,12 @@ function Player(x, y) {
   this.shieldCounter = 0;
   this.shieldColour = "lightblue";
 
-  // this.smokeParticles = [];
-  // this.fireParticles = [];
-
   this.random = function (min, max) {
     return Math.random() * (max - min) + min;
   };
 
-  this.array = [
+  //create player ship tiles
+  this.playerShipConstructArray = [
     //top row 0
     {
       xoffset: this.width / -2,
@@ -109,8 +107,8 @@ function Player(x, y) {
     },
   ];
 
-  for (var i = 0; i < this.array.length; i++) {
-    shipTiles.push(this.array[i]);
+  for (var i = 0; i < this.playerShipConstructArray.length; i++) {
+    playerShipTiles.push(this.playerShipConstructArray[i]);
   }
 
   //movement
@@ -190,7 +188,7 @@ function Player(x, y) {
       }
 
       // create particles
-      shipTiles.forEach((tile) => {
+      playerShipTiles.forEach((tile) => {
         this.damage = tile.damage;
         //create smoke smoke particles
         while (tile.smokeParticles.length < this.damage * 10) {
@@ -260,8 +258,8 @@ function Player(x, y) {
   };
 
   // turret variables
-  let turretX = canvas.width / 2;
-  let turretY = canvas.height - 150;
+  let turretX = this.x;
+  let turretY = this.y;
   let angle = 0;
   let bullets = [];
   // Mouse position
@@ -282,27 +280,19 @@ function Player(x, y) {
       this.y += Math.sin(this.angle) * this.speed;
     }
 
-    draw() {
-      ctx.fillStyle = "red";
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    // draw() {
+    //   ctx.fillStyle = "red";
+    //   ctx.beginPath();
+    //   ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
+    //   ctx.fill();
+    // }
   }
 
   canvas.addEventListener("mousedown", () => {
-    bullets.push(new Bullet(turretX, turretY, angle));
-    console.log(bullets);
+    bullets.push(new Bullet(this.x, this.y, angle));
+    console.log(bullets[0]);
   });
 
-  // function updateBullets() {
-  //   bullets.forEach((bullet, index) => {
-  //       bullet.update();
-  //       if (bullet.x < 0 || bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) {
-  //           bullets.splice(index, 1); // Remove bullet if it goes out of bounds
-  //       }
-  //   });
-  // }
 
   //detect mouse pos
   canvas.addEventListener("mousemove", (e) => {
@@ -311,9 +301,21 @@ function Player(x, y) {
     angle = Math.atan2(mouseY - this.y, mouseX - this.x);
   });
 
-  // draw the player position
+  // draw
   this.draw = function () {
-    this.array.forEach((element) => {
+    //draw bullets
+
+    bullets.forEach((bullet) => {
+      context.fillStyle = "red";
+      context.save();
+      context.beginPath();
+      context.arc(bullet.x, bullet.y, 10, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+    });
+
+    //draw player ship
+    playerShipTiles.forEach((element) => {
       context.save();
       context.fillStyle = "grey";
       context.translate(this.x, this.y);
@@ -321,27 +323,29 @@ function Player(x, y) {
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
       context.rotate(this.angle);
-      shiptileset.draw(element.tile, element.xoffset, element.yoffset);
+
+      //draw tiles
+      shiptilegraphics.draw(element.tile, element.xoffset, element.yoffset);
 
       //engine booster up down
-      if (element.tile == "booster") {
-        if (downKey == true) {
-          shiptileset.drawbooster(
-            element.tile,
+      if (element.tile === "booster") {
+        if (downKey === true) {
+          shiptilegraphics.drawbooster(
+            element.tileType,
             element.xoffset,
             element.yoffset,
             "downKey"
           );
-        } else if (upKey == true) {
-          shiptileset.drawbooster(
-            element.tile,
+        } else if (upKey === true) {
+          shiptilegraphics.drawbooster(
+            element.tileType,
             element.xoffset,
             element.yoffset,
             "upKey"
           );
         } else {
-          shiptileset.drawbooster(
-            element.tile,
+          shiptilegraphics.drawbooster(
+            element.tileType,
             element.xoffset,
             element.yoffset,
             "noKey"
@@ -349,10 +353,10 @@ function Player(x, y) {
         }
       }
       //booster right
-      if (element.tile == "booster-right") {
-        if (leftKey == true) {
-          shiptileset.drawbooster(
-            element.tile,
+      if (element.tile === "booster-right") {
+        if (leftKey === true) {
+          shiptilegraphics.drawbooster(
+            element.tileType,
             element.xoffset,
             element.yoffset,
             "leftKey"
@@ -360,10 +364,10 @@ function Player(x, y) {
         }
       }
       //booster left
-      if (element.tile == "booster-left") {
-        if (rightKey == true) {
-          shiptileset.drawbooster(
-            element.tile,
+      if (element.tile === "booster-left") {
+        if (rightKey === true) {
+          shiptilegraphics.drawbooster(
+            element.tileType,
             element.xoffset,
             element.yoffset,
             "rightKey"
@@ -437,7 +441,7 @@ function Player(x, y) {
     }
 
     // draw particles
-    shipTiles.forEach((tile) => {
+    playerShipTiles.forEach((tile) => {
       this.damage = tile.damage;
       //draw smokeParticles
       for (let i = 0; i < tile.smokeParticles.length; i += 1) {
@@ -521,21 +525,25 @@ function Player(x, y) {
         this.shieldColour = "lightblue";
       }, 700);
     } else {
-      if (this.array[location].damage < this.array[location].maxDamage) {
-        this.array[location].damage = this.array[location].damage + aDamage;
+      if (
+        playerShipTiles[location].damage < playerShipTiles[location].maxDamage
+      ) {
+        playerShipTiles[location].damage =
+          playerShipTiles[location].damage + aDamage;
       } else if (
-        (this.array[location].damage = this.array[location].maxDamage)
+        (playerShipTiles[location].damage = playerShipTiles[location].maxDamage)
       ) {
         getRandomNeighborTile = Math.floor(
-          Math.random() * this.array[location].neighborTiles.length
+          Math.random() * playerShipTiles[location].neighborTiles.length
         );
         neighborTile =
-          this.array[location].neighborTiles[getRandomNeighborTile];
+          playerShipTiles[location].neighborTiles[getRandomNeighborTile];
         if (
-          this.array[neighborTile].damage < this.array[neighborTile].maxDamage
+          playerShipTiles[neighborTile].damage <
+          playerShipTiles[neighborTile].maxDamage
         ) {
-          this.array[neighborTile].damage =
-            this.array[neighborTile].damage + aDamage;
+          playerShipTiles[neighborTile].damage =
+            playerShipTiles[neighborTile].damage + aDamage;
         }
       }
     }
