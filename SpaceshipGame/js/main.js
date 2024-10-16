@@ -16,6 +16,10 @@ var leftKey;
 var rightKey;
 var playerShipTiles = [];
 var isCollide = false;
+ // Mouse position
+ let mouseX = this.x;
+ let mouseY = this.y;
+ let bullets = [];
 
 //runs once page has loaded
 window.onload = function () {
@@ -62,6 +66,7 @@ function setupInputs() {
       rightKey = true;
     }
   });
+
   document.addEventListener("keyup", function (event) {
     if (event.key === "w" || event.key === "ArrowUp") {
       upKey = false;
@@ -73,13 +78,14 @@ function setupInputs() {
       rightKey = false;
     }
   });
+  
 }
 
 //update positions
 function update() {
   player.update();
-  // player.updateBullets();
   checkPlayerCollision();
+  checkBulletCollision();
   draw();
 }
 
@@ -87,7 +93,6 @@ function update() {
 function checkPlayerCollision() {
   for (var i = 0; i < playerShipTiles.length; i++) {
     for (var a = 0; a < asteroids.asteroidsList.length; a++) {
-      // console.log(asteroids.asteroidsList[a])
       if (
         playerShipTiles[i].ypos + 15 >= //bottom of ship tile
           asteroids.asteroidsList[a].y - asteroids.asteroidsList[a].size / 2 && //top of asteroid
@@ -111,6 +116,31 @@ function checkPlayerCollision() {
   }
 }
 
+//detect bullet collision with asteroid
+function checkBulletCollision() {
+  for (var i = 0; i < bullets.length; i++) {
+    for (var a = 0; a < asteroids.asteroidsList.length; a++) {
+      if (
+        bullets[i].ypos >=
+          asteroids.asteroidsList[a].y - asteroids.asteroidsList[a].size / 2 && //top of asteroid
+        bullets[i].ypos <= 
+          asteroids.asteroidsList[a].y + asteroids.asteroidsList[a].size / 2 && //bottom of asteroid
+        bullets[i].xpos >= 
+          asteroids.asteroidsList[a].x - asteroids.asteroidsList[a].size / 2 && // left side of asteroid
+        bullets[i].xpos <= 
+          asteroids.asteroidsList[a].x + asteroids.asteroidsList[a].size / 2 // right side of asteroid
+      ) {
+        console.log("bullet hit asteroid");
+        if (bullets[i].damage !== null) {
+          asteroidHit = asteroids.asteroidsList[a];
+          asteroids.destroyAsteroid(asteroidHit, 0, -3);
+          asteroids.asteroidsList.splice(a, 1);
+        }
+      }
+    }
+  }
+}
+
 //draw everything
 function draw() {
   //clear the canvas
@@ -125,7 +155,7 @@ function draw() {
 
   //draw asteroids
   asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);
-  asteroids.drawParticles()
+  // asteroids.drawParticles()
 
   //draw bullets
   // context.fillStyle = "red";

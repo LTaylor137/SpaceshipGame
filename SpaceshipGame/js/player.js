@@ -261,23 +261,22 @@ function Player(x, y) {
   let turretX = this.x;
   let turretY = this.y;
   let angle = 0;
-  let bullets = [];
-  // Mouse position
-  let mouseX = this.x;
-  let mouseY = this.y;
+  
+ 
 
   // Bullet class
   class Bullet {
     constructor(x, y, angle) {
-      this.x = x;
-      this.y = y;
+      this.xpos = x;
+      this.ypos = y;
       this.angle = angle;
       this.speed = 10;
+      this.damage = 1;
     }
 
     update() {
-      this.x += Math.cos(this.angle) * this.speed;
-      this.y += Math.sin(this.angle) * this.speed;
+      this.xpos += Math.cos(this.angle) * this.speed;
+      this.ypos += Math.sin(this.angle) * this.speed;
     }
 
     // draw() {
@@ -293,7 +292,6 @@ function Player(x, y) {
     console.log(bullets[0]);
   });
 
-
   //detect mouse pos
   canvas.addEventListener("mousemove", (e) => {
     mouseX = e.clientX - canvas.offsetLeft;
@@ -303,17 +301,6 @@ function Player(x, y) {
 
   // draw
   this.draw = function () {
-    //draw bullets
-
-    bullets.forEach((bullet) => {
-      context.fillStyle = "red";
-      context.save();
-      context.beginPath();
-      context.arc(bullet.x, bullet.y, 10, 0, Math.PI * 2);
-      context.fill();
-      context.restore();
-    });
-
     //draw player ship
     playerShipTiles.forEach((element) => {
       context.save();
@@ -375,20 +362,33 @@ function Player(x, y) {
         }
       }
 
-      // function drawTurret() {
-      context.save();
-      // context.translate(turretX, turretY);
-      context.rotate(angle);
-      context.fillStyle = "#666";
-      context.fillRect(0, -3.5, 20, 7);
-      context.restore();
-      context.fillStyle = "#666";
-      context.beginPath();
-      context.arc(0, 0, 10, 10, Math.PI * 360);
-      context.fill();
-
       context.restore();
     });
+
+    //draw bullets
+    bullets.forEach((bullet) => {
+      context.fillStyle = "red";
+      // context.save();
+      context.beginPath();
+      context.arc(bullet.xpos, bullet.ypos, 5, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+    });
+
+    // drawTurret
+    context.save();
+    context.translate(this.x, this.y);
+    context.rotate(angle);
+    context.fillStyle = "#666";
+    context.fillRect(0, -3.5, 20, 7);
+    context.restore();
+    context.save();
+    context.translate(this.x, this.y);
+    context.fillStyle = "#666";
+    context.beginPath();
+    context.arc(0, 0, 10, 0, Math.PI * 2);
+    context.fill();
+    context.restore();
 
     //draw shield
     if (this.shieldValue >= 1) {
