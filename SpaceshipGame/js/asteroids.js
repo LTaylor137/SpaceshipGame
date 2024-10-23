@@ -1,7 +1,6 @@
 function Asteroids() {
   this.asteroidsList = [];
-  randomList = [1, 2, 3, 4, 5, 6, 7];
-  // randomList = [-3,3];
+  const randomList = [1, 2, 3, 4, 5, 6, 7];
   this.particles = [];
 
   this.random = function (min, max) {
@@ -77,26 +76,26 @@ function Asteroids() {
     sxSpeed = xSpeed
     sySpeed = ySpeed
 
-    //create particles
-    for (let i = 0; i < asteroid.size; i += 1) {
+    //create rock particles
+    for (let i = 0; i < asteroid.size/3; i += 1) {
       const particle = {
         x: pxpos + this.random(-asteroid.size / 3, asteroid.size / 3),
         y: pypos + this.random(-5, asteroid.size / 2),
         xvel: asteroid.xDirection * Math.random() + this.random(-1, 1),
         yvel: Math.random() + this.random(-1, 1),
-        size: this.random(1, 15),
+        size: this.random(7, 15),
         life: this.random(0, 50),
       };
       this.particles.push(particle);
     }
     //create more rocks travelling in direction of ship
-    for (let i = 0; i < asteroid.size/4; i += 1) {
+    for (let i = 0; i < asteroid.size; i += 1) {
       const particle = {
         x: pxpos + this.random(-asteroid.size / 3, asteroid.size / 3),
         y: pypos + this.random(-5, asteroid.size / 2),
         xvel: asteroid.xDirection * Math.random() + this.random(-1, 1) + sxSpeed/2,
         yvel: Math.random() + this.random(-1, 1) + sySpeed/2-0.5,
-        size: this.random(5, 15),
+        size: this.random(1, 10),
         life: this.random(0, 50),
       };
       this.particles.push(particle);

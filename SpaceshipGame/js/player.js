@@ -111,7 +111,7 @@ function Player(x, y) {
     playerShipTiles.push(this.playerShipConstructArray[i]);
   }
 
-  //movement
+  //update player position
   this.update = function () {
     if (this.active) {
       //horizontal speed
@@ -258,11 +258,10 @@ function Player(x, y) {
   };
 
   // turret variables
-  let turretX = this.x;
-  let turretY = this.y;
+  // let turretX = this.x;
+  // let turretY = this.y;
   let angle = 0;
   
- 
 
   // Bullet class
   class Bullet {
@@ -279,17 +278,11 @@ function Player(x, y) {
       this.ypos += Math.sin(this.angle) * this.speed;
     }
 
-    // draw() {
-    //   ctx.fillStyle = "red";
-    //   ctx.beginPath();
-    //   ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
-    //   ctx.fill();
-    // }
   }
 
   canvas.addEventListener("mousedown", () => {
     bullets.push(new Bullet(this.x, this.y, angle));
-    console.log(bullets[0]);
+    console.log(angle);
   });
 
   //detect mouse pos
@@ -374,6 +367,8 @@ function Player(x, y) {
       context.fill();
       context.restore();
     });
+
+    
 
     // drawTurret
     context.save();

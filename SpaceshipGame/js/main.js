@@ -132,9 +132,14 @@ function checkBulletCollision() {
       ) {
         console.log("bullet hit asteroid");
         if (bullets[i].damage !== null) {
+          //calculate angle of attack
+          x_speed = bullets[i].speed/3 * Math.cos(bullets[i].angle);
+          y_speed = bullets[i].speed/3 * Math.sin(bullets[i].angle);
+            
           asteroidHit = asteroids.asteroidsList[a];
-          asteroids.destroyAsteroid(asteroidHit, 0, -3);
+          asteroids.destroyAsteroid(asteroidHit, x_speed, y_speed);
           asteroids.asteroidsList.splice(a, 1);
+          bullets.splice(i, 1);
         }
       }
     }
