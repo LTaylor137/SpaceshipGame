@@ -8,6 +8,7 @@ var showDevInfo = false;
 //game variables
 var gameLoop;
 var player;
+var freighter;
 
 //input variables
 var upKey;
@@ -15,6 +16,7 @@ var downKey;
 var leftKey;
 var rightKey;
 var playerShipTiles = [];
+var freighterShipTiles = [];
 var isCollide = false;
  // Mouse position
  let mouseX = this.x;
@@ -29,6 +31,7 @@ window.onload = function () {
   setupInputs();
   //create objects
   player = new Player(350, 600);
+  freighter = new Freighter(350, 600);
   shiptilegraphics = new Shiptilegraphics();
   stars = new Stars();
   asteroids = new Asteroids();
@@ -157,6 +160,9 @@ function draw() {
 
   //draw player
   player.draw();
+
+ //draw freighter
+ freighter.draw();
 
   //draw asteroids
   asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);
