@@ -297,7 +297,7 @@ function Player(x, y) {
     //draw player ship
     playerShipTiles.forEach((element) => {
       context.save();
-      context.fillStyle = "grey";
+      context.fillStyle = "lightgrey";
       context.translate(this.x, this.y);
       // this updates the position of each tile by adding its individual offset
       element.xpos = this.x + element.xoffset + this.width / 2;

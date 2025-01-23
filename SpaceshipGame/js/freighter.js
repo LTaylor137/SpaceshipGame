@@ -25,11 +25,75 @@ function Freighter(x, y) {
   this.freighterShipConstructArray = [
     //top row 0
     {
-      xoffset: this.width / -2,
-      yoffset: this.height / -2 - 30,
+      xoffset: this.width / -2 -30,
+      yoffset: this.height / -2 - 60,
       xpos: this.x,
       ypos: this.y,
-      tile: "nose",
+      tile: "wing-left",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2 -60,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 2, 4],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //4
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 -60,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "wing-right",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    // row 2
+    {
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2-30,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //3
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2 -30,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 2, 4],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //4
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2-30,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
@@ -37,22 +101,13 @@ function Freighter(x, y) {
       fireParticles: [],
     },
     //middle row 1
-    {
-      xoffset: this.width / -2 - 60,
-      yoffset: this.height / -2,
-      tile: "booster-left",
-      damage: null,
-      maxDamage: null,
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //2
+    //
     {
       xoffset: this.width / -2 - 30,
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 - 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "wing-left",
+      tile: "body",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
@@ -78,27 +133,152 @@ function Freighter(x, y) {
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 + 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "wing-right",
+      tile: "body",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
       smokeParticles: [],
       fireParticles: [],
     },
-    //5
+    //bottom row 6
+    {
+      xoffset: this.width / -2 -60,
+      yoffset: this.height / -2+30,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "bot-left-indent",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    {
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2+30,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //3
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2+30,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 2, 4],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //4
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 +30,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    {
+      xoffset: this.width / -2 +60,
+      yoffset: this.height / -2+30,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "bot-right-indent",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //row5
+    {
+      xoffset: this.width / -2 - 60,
+      yoffset: this.height / -2+60,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "bot-left",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    {
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2+60,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //3
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2+60,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body-indent-bottom",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 2, 4],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //4
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 +60,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
     {
       xoffset: this.width / -2 + 60,
-      yoffset: this.height / -2,
-      tile: "booster-right",
+      yoffset: this.height / -2+60,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 + 30,
+      tile: "bot-right",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //booster row
+    {
+      xoffset: this.width / -2 -30,
+      yoffset: this.height / -2 + 90,
+      tile: "booster",
       damage: null,
       maxDamage: null,
       smokeParticles: [],
       fireParticles: [],
     },
-    //bottom row 6
     {
-      xoffset: this.width / -2,
-      yoffset: this.height / -2 + 30,
+      xoffset: this.width / -2 +30,
+      yoffset: this.height / -2 + 90,
       tile: "booster",
       damage: null,
       maxDamage: null,
@@ -260,7 +440,7 @@ function Freighter(x, y) {
   // turret variables
   // let turretX = this.x;
   // let turretY = this.y;
-  let angle = 0;
+ // let angle = 0;
   
 
   // Bullet class
@@ -297,143 +477,144 @@ function Freighter(x, y) {
     //draw freighter ship
     freighterShipTiles.forEach((element) => {
       context.save();
-      context.fillStyle = "grey";
+      context.fillStyle = "darkgrey";
       context.translate(this.x, this.y);
       // this updates the position of each tile by adding its individual offset
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
-      context.rotate(this.angle);
+    //  context.rotate(this.angle);
 
       //draw tiles
       shiptilegraphics.draw(element.tile, element.xoffset, element.yoffset);
 
       //engine booster up down
       if (element.tile === "booster") {
-        if (downKey === true) {
-          shiptilegraphics.drawbooster(
-            element.tileType,
-            element.xoffset,
-            element.yoffset,
-            "downKey"
-          );
-        } else if (upKey === true) {
-          shiptilegraphics.drawbooster(
-            element.tileType,
-            element.xoffset,
-            element.yoffset,
-            "upKey"
-          );
-        } else {
+        // if (downKey === true) {
+        //   shiptilegraphics.drawbooster(
+        //     element.tileType,
+        //     element.xoffset,
+        //     element.yoffset,
+        //     "downKey"
+        //   );
+        // } else if (upKey === true) {
+        //   shiptilegraphics.drawbooster(
+        //     element.tileType,
+        //     element.xoffset,
+        //     element.yoffset,
+        //     "upKey"
+        //   );
+        // } else {
+          
           shiptilegraphics.drawbooster(
             element.tileType,
             element.xoffset,
             element.yoffset,
             "noKey"
           );
-        }
+        // }
       }
       //booster right
-      if (element.tile === "booster-right") {
-        if (leftKey === true) {
-          shiptilegraphics.drawbooster(
-            element.tileType,
-            element.xoffset,
-            element.yoffset,
-            "leftKey"
-          );
-        }
-      }
-      //booster left
-      if (element.tile === "booster-left") {
-        if (rightKey === true) {
-          shiptilegraphics.drawbooster(
-            element.tileType,
-            element.xoffset,
-            element.yoffset,
-            "rightKey"
-          );
-        }
-      }
+      // if (element.tile === "booster-right") {
+      //   if (leftKey === true) {
+      //     shiptilegraphics.drawbooster(
+      //       element.tileType,
+      //       element.xoffset,
+      //       element.yoffset,
+      //       "leftKey"
+      //     );
+      //   }
+      // }
+      // //booster left
+      // if (element.tile === "booster-left") {
+      //   if (rightKey === true) {
+      //     shiptilegraphics.drawbooster(
+      //       element.tileType,
+      //       element.xoffset,
+      //       element.yoffset,
+      //       "rightKey"
+      //     );
+      //   }
+      // }
 
       context.restore();
     });
 
     //draw bullets
-    bullets.forEach((bullet) => {
-      context.fillStyle = "red";
-      // context.save();
-      context.beginPath();
-      context.arc(bullet.xpos, bullet.ypos, 5, 0, Math.PI * 2);
-      context.fill();
-      context.restore();
-    });
+    // bullets.forEach((bullet) => {
+    //   context.fillStyle = "red";
+    //   // context.save();
+    //   context.beginPath();
+    //   context.arc(bullet.xpos, bullet.ypos, 5, 0, Math.PI * 2);
+    //   context.fill();
+    //   context.restore();
+    // });
 
     
 
     // drawTurret
-    context.save();
-    context.translate(this.x, this.y);
-    context.rotate(angle);
-    context.fillStyle = "#666";
-    context.fillRect(0, -3.5, 20, 7);
-    context.restore();
-    context.save();
-    context.translate(this.x, this.y);
-    context.fillStyle = "#666";
-    context.beginPath();
-    context.arc(0, 0, 10, 0, Math.PI * 2);
-    context.fill();
-    context.restore();
+  //   context.save();
+  //   context.translate(this.x, this.y);
+  //  // context.rotate(angle);
+  //   context.fillStyle = "#666";
+  //   context.fillRect(0, -3.5, 20, 7);
+  //   context.restore();
+  //   context.save();
+  //   context.translate(this.x, this.y);
+  //   context.fillStyle = "#666";
+  //   context.beginPath();
+  //   context.arc(0, 0, 10, 0, Math.PI * 2);
+  //   context.fill();
+  //   context.restore();
 
     //draw shield
-    if (this.shieldValue >= 1) {
-      context.strokeStyle = this.shieldColour;
-      context.beginPath();
-      context.globalAlpha = 0.7;
-      context.lineWidth = 2;
-      context.arc(this.x, this.y, 54, 0, 2 * Math.PI);
-      context.closePath();
-      context.stroke();
-      context.globalAlpha = 0.25;
-      context.beginPath();
-      context.lineWidth = 5;
-      context.arc(this.x, this.y, 51, 0, 2 * Math.PI);
-      context.closePath();
-      context.stroke();
-      context.globalAlpha = 1;
-    }
-    if (this.shieldValue >= 2) {
-      context.strokeStyle = this.shieldColour;
-      context.globalAlpha = 0.4;
-      context.beginPath();
-      context.lineWidth = 10;
-      context.arc(this.x, this.y, 50, 0, 2 * Math.PI);
-      context.closePath();
-      context.stroke();
-      context.globalAlpha = 0.2;
-      context.beginPath();
-      context.lineWidth = 4;
-      context.arc(this.x, this.y, 43, 0, 2 * Math.PI);
-      context.closePath();
-      context.stroke();
-      context.globalAlpha = 1;
-    }
-    if (this.shieldValue === 3) {
-      context.beginPath();
-      context.globalAlpha = 0.3;
-      context.fillStyle = this.shieldColour;
-      context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
-      context.fill();
-      context.globalAlpha = 1;
-    }
-    if (this.shieldValue === 4) {
-      context.beginPath();
-      context.globalAlpha = 0.3;
-      context.fillStyle = "yellow";
-      context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
-      context.fill();
-      context.globalAlpha = 1;
-    }
+    // if (this.shieldValue >= 1) {
+    //   context.strokeStyle = this.shieldColour;
+    //   context.beginPath();
+    //   context.globalAlpha = 0.7;
+    //   context.lineWidth = 2;
+    //   context.arc(this.x, this.y, 54, 0, 2 * Math.PI);
+    //   context.closePath();
+    //   context.stroke();
+    //   context.globalAlpha = 0.25;
+    //   context.beginPath();
+    //   context.lineWidth = 5;
+    //   context.arc(this.x, this.y, 51, 0, 2 * Math.PI);
+    //   context.closePath();
+    //   context.stroke();
+    //   context.globalAlpha = 1;
+    // }
+    // if (this.shieldValue >= 2) {
+    //   context.strokeStyle = this.shieldColour;
+    //   context.globalAlpha = 0.4;
+    //   context.beginPath();
+    //   context.lineWidth = 10;
+    //   context.arc(this.x, this.y, 50, 0, 2 * Math.PI);
+    //   context.closePath();
+    //   context.stroke();
+    //   context.globalAlpha = 0.2;
+    //   context.beginPath();
+    //   context.lineWidth = 4;
+    //   context.arc(this.x, this.y, 43, 0, 2 * Math.PI);
+    //   context.closePath();
+    //   context.stroke();
+    //   context.globalAlpha = 1;
+    // }
+    // if (this.shieldValue === 3) {
+    //   context.beginPath();
+    //   context.globalAlpha = 0.3;
+    //   context.fillStyle = this.shieldColour;
+    //   context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
+    //   context.fill();
+    //   context.globalAlpha = 1;
+    // }
+    // if (this.shieldValue === 4) {
+    //   context.beginPath();
+    //   context.globalAlpha = 0.3;
+    //   context.fillStyle = "yellow";
+    //   context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
+    //   context.fill();
+    //   context.globalAlpha = 1;
+    // }
 
     // draw particles
     freighterShipTiles.forEach((tile) => {
@@ -484,7 +665,7 @@ function Freighter(x, y) {
         if (element.damage !== null) {
           context.save();
           context.translate(this.x, this.y);
-          context.rotate(this.angle);
+       //   context.rotate(this.angle);
           context.fillStyle = "magenta";
           context.fillText(
             element.damage,

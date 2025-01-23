@@ -30,7 +30,7 @@ window.onload = function () {
   context = canvas.getContext("2d");
   setupInputs();
   //create objects
-  player = new Player(350, 600);
+  player = new Player(150, 600);
   freighter = new Freighter(350, 600);
   shiptilegraphics = new Shiptilegraphics();
   stars = new Stars();
@@ -158,11 +158,13 @@ function draw() {
   //draw stars
   stars.render(this.player.ySpeed, this.player.xSpeed);
 
+   //draw freighter
+ freighter.draw();
+
   //draw player
   player.draw();
 
- //draw freighter
- freighter.draw();
+
 
   //draw asteroids
   asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);
