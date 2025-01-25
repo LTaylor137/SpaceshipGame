@@ -12,8 +12,8 @@ function Player(x, y) {
   this.height = 30;
   this.active = true;
   this.count = 0;
-  this.shieldValue = 3;
-  this.shieldMaxValue = 4;
+  this.shieldValue = 2;
+  this.shieldMaxValue = 2;
   this.shieldCounter = 0;
   this.shieldColour = "lightblue";
 
@@ -52,7 +52,7 @@ function Player(x, y) {
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 - 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "wing-left",
+      tile: "top-left",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
@@ -78,7 +78,7 @@ function Player(x, y) {
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 + 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "wing-right",
+      tile: "top-right",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
@@ -224,6 +224,7 @@ function Player(x, y) {
             life: this.random(this.smokeLife, 100),
           };
           tile.smokeParticles.push(smokeParticle);
+          //console.log(tile.smokeParticles.length);
         }
         // //create fire Particles
         while (tile.fireParticles.length < this.damage * this.damage) {
@@ -437,7 +438,7 @@ function Player(x, y) {
 
     // draw particles
     playerShipTiles.forEach((tile) => {
-      this.damage = tile.damage;
+      //this.damage = tile.damage;
       //draw smokeParticles
       for (let i = 0; i < tile.smokeParticles.length; i += 1) {
         p = tile.smokeParticles[i];
@@ -459,6 +460,7 @@ function Player(x, y) {
         if (p.life >= 100) {
           tile.smokeParticles.shift(p);
         }
+        // console.log(tile.smokeParticles.length);
       }
       //draw fireParticles
       for (let i = 0; i < tile.fireParticles.length; i += 1) {
@@ -480,21 +482,22 @@ function Player(x, y) {
       context.fillStyle = "red";
       context.fillRect(this.x - 2, this.y - 2, 4, 4);
       //draw damage value
-      this.array.forEach((element) => {
-        if (element.damage !== null) {
-          context.save();
-          context.translate(this.x, this.y);
-          context.rotate(this.angle);
-          context.fillStyle = "magenta";
-          context.fillText(
-            element.damage,
-            element.xoffset + 12,
-            element.yoffset + 17
-          );
-          context.restore();
-        }
-      });
+      // this.array.forEach((element) => {
+      //   if (element.damage !== null) {
+      //     context.save();
+      //     context.translate(this.x, this.y);
+      //     context.rotate(this.angle);
+      //     context.fillStyle = "magenta";
+          // context.fillText(
+          //   element.damage,
+          //   element.xoffset + 12,
+          //   element.yoffset + 17
+          // );
+          // context.restore();
+        // }
+      // });
     }
+
   };
 
   // player take damage
@@ -520,6 +523,7 @@ function Player(x, y) {
         this.shieldColour = "lightblue";
       }, 700);
     } else {
+       
       if (
         playerShipTiles[location].damage < playerShipTiles[location].maxDamage
       ) {
@@ -541,6 +545,7 @@ function Player(x, y) {
             playerShipTiles[neighborTile].damage + aDamage;
         }
       }
+      //console.log("player hit! [location: " + location + "] tiledamage: " + playerShipTiles[location].damage);
     }
   };
 }

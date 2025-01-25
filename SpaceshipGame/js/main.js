@@ -18,10 +18,11 @@ var rightKey;
 var playerShipTiles = [];
 var freighterShipTiles = [];
 var isCollide = false;
- // Mouse position
- let mouseX = this.x;
- let mouseY = this.y;
- let bullets = [];
+
+// mouse position
+let mouseX = this.x;
+let mouseY = this.y;
+let bullets = [];
 
 //runs once page has loaded
 window.onload = function () {
@@ -81,13 +82,14 @@ function setupInputs() {
       rightKey = false;
     }
   });
-  
 }
 
 //update positions
 function update() {
   player.update();
+  freighter.update(this.player.ySpeed, this.player.xSpeed, this.player.y);
   checkPlayerCollision();
+  checkFreighterCollision();
   checkBulletCollision();
   draw();
 }
@@ -107,11 +109,38 @@ function checkPlayerCollision() {
           asteroids.asteroidsList[a].x + asteroids.asteroidsList[a].size / 2 // right side of asteroid
       ) {
         if (playerShipTiles[i].damage !== null) {
-          shipTile = playerShipTiles[i];
+          //shipTile = playerShipTiles[i];
           asteroidNo = asteroids.asteroidsList[a];
           asteroids.destroyAsteroid(asteroidNo, player.xSpeed, player.ySpeed);
           document.getElementById("isCollide").innerHTML = i;
           player.takeDamage(i, asteroidNo.damage);
+          asteroids.asteroidsList.splice(a, 1);
+        }
+      }
+    }
+  }
+}
+
+//detect asteroid collision with freighter
+function checkFreighterCollision() {
+  for (var i = 0; i < freighterShipTiles.length; i++) {
+    for (var a = 0; a < asteroids.asteroidsList.length; a++) {
+      if (
+        freighterShipTiles[i].ypos + 15 >= //bottom of ship tile
+          asteroids.asteroidsList[a].y - asteroids.asteroidsList[a].size / 2 && //top of asteroid
+        freighterShipTiles[i].ypos - 15 <= //top of ship tile
+          asteroids.asteroidsList[a].y + asteroids.asteroidsList[a].size / 2 && //bottom of asteroid
+        freighterShipTiles[i].xpos + 15 >= // right of ship tile
+          asteroids.asteroidsList[a].x - asteroids.asteroidsList[a].size / 2 && // left side of asteroid
+        freighterShipTiles[i].xpos - 15 <= // left of ship tile
+          asteroids.asteroidsList[a].x + asteroids.asteroidsList[a].size / 2 // right side of asteroid
+      ) {
+        if (freighterShipTiles[i].damage !== null) {
+         //shipTile = freighterShipTiles[i];
+          asteroidNo = asteroids.asteroidsList[a];
+          asteroids.destroyAsteroid(asteroidNo, player.xSpeed, player.ySpeed);
+          document.getElementById("isCollide").innerHTML = i;
+          freighter.takeDamage(i, asteroidNo.damage);
           asteroids.asteroidsList.splice(a, 1);
         }
       }
@@ -126,19 +155,19 @@ function checkBulletCollision() {
       if (
         bullets[i].ypos >=
           asteroids.asteroidsList[a].y - asteroids.asteroidsList[a].size / 2 && //top of asteroid
-        bullets[i].ypos <= 
+        bullets[i].ypos <=
           asteroids.asteroidsList[a].y + asteroids.asteroidsList[a].size / 2 && //bottom of asteroid
-        bullets[i].xpos >= 
+        bullets[i].xpos >=
           asteroids.asteroidsList[a].x - asteroids.asteroidsList[a].size / 2 && // left side of asteroid
-        bullets[i].xpos <= 
+        bullets[i].xpos <=
           asteroids.asteroidsList[a].x + asteroids.asteroidsList[a].size / 2 // right side of asteroid
       ) {
         console.log("bullet hit asteroid");
         if (bullets[i].damage !== null) {
           //calculate angle of attack
-          x_speed = bullets[i].speed/3 * Math.cos(bullets[i].angle);
-          y_speed = bullets[i].speed/3 * Math.sin(bullets[i].angle);
-            
+          x_speed = (bullets[i].speed / 3) * Math.cos(bullets[i].angle);
+          y_speed = (bullets[i].speed / 3) * Math.sin(bullets[i].angle);
+
           asteroidHit = asteroids.asteroidsList[a];
           asteroids.destroyAsteroid(asteroidHit, x_speed, y_speed);
           asteroids.asteroidsList.splice(a, 1);
@@ -158,13 +187,11 @@ function draw() {
   //draw stars
   stars.render(this.player.ySpeed, this.player.xSpeed);
 
-   //draw freighter
- freighter.draw();
+  //draw freighter
+  freighter.draw(this.player.ySpeed, this.player.xSpeed);
 
   //draw player
   player.draw();
-
-
 
   //draw asteroids
   asteroids.render(this.player.ySpeed, this.player.xSpeed, this.player.y);

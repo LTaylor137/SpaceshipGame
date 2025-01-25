@@ -12,8 +12,8 @@ function Freighter(x, y) {
   this.height = 30;
   this.active = true;
   this.count = 0;
-  this.shieldValue = 3;
-  this.shieldMaxValue = 4;
+  this.shieldValue = 0;
+  this.shieldMaxValue = 0;
   this.shieldCounter = 0;
   this.shieldColour = "lightblue";
 
@@ -22,181 +22,213 @@ function Freighter(x, y) {
   };
 
   //create freighter ship tiles
+  //----[][][]
+  //----[][][]
+  //[][][][][][][]
+  //--[][][][][]
+  //----[]--[]
+
   this.freighterShipConstructArray = [
-    //top row 0
+    //row 1
+    //0
     {
-      xoffset: this.width / -2 -30,
+      xoffset: this.width / -2 - 30,
       yoffset: this.height / -2 - 60,
-      xpos: this.x,
-      ypos: this.y,
-      tile: "wing-left",
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 - 60,
+      tile: "top-left",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [3],
+      neighborTiles: [1, 4],
       smokeParticles: [],
       fireParticles: [],
     },
+    //1
     {
       xoffset: this.width / -2,
-      yoffset: this.height / -2 -60,
+      yoffset: this.height / -2 - 60,
       xpos: this.x + this.width / -2,
-      ypos: this.y + this.height / -2 + 30,
+      ypos: this.y + this.height / -2 - 60,
       tile: "body",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [0, 2, 4],
+      neighborTiles: [0, 2, 5],
       smokeParticles: [],
       fireParticles: [],
     },
-    //4
+    //2
     {
       xoffset: this.width / -2 + 30,
-      yoffset: this.height / -2 -60,
+      yoffset: this.height / -2 - 60,
       xpos: this.x + this.width / -2 + 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "wing-right",
+      ypos: this.y + this.height / -2 - 60,
+      tile: "top-right",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [3],
+      neighborTiles: [1, 5],
       smokeParticles: [],
       fireParticles: [],
     },
     // row 2
-    {
-      xoffset: this.width / -2 - 30,
-      yoffset: this.height / -2-30,
-      xpos: this.x + this.width / -2 - 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
     //3
     {
-      xoffset: this.width / -2,
-      yoffset: this.height / -2 -30,
-      xpos: this.x + this.width / -2,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [0, 2, 4],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //4
-    {
-      xoffset: this.width / -2 + 30,
-      yoffset: this.height / -2-30,
-      xpos: this.x + this.width / -2 + 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //middle row 1
-    //
-    {
-      xoffset: this.width / -2 - 30,
-      yoffset: this.height / -2,
-      xpos: this.x + this.width / -2 - 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //3
-    {
-      xoffset: this.width / -2,
-      yoffset: this.height / -2,
-      xpos: this.x + this.width / -2,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [0, 2, 4],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //4
-    {
-      xoffset: this.width / -2 + 30,
-      yoffset: this.height / -2,
-      xpos: this.x + this.width / -2 + 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //bottom row 6
-    {
-      xoffset: this.width / -2 -60,
-      yoffset: this.height / -2+30,
-      xpos: this.x + this.width / -2 - 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "bot-left-indent",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    {
-      xoffset: this.width / -2 - 30,
-      yoffset: this.height / -2+30,
-      xpos: this.x + this.width / -2 - 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //3
-    {
-      xoffset: this.width / -2,
-      yoffset: this.height / -2+30,
-      xpos: this.x + this.width / -2,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [0, 2, 4],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //4
-    {
-      xoffset: this.width / -2 + 30,
-      yoffset: this.height / -2 +30,
-      xpos: this.x + this.width / -2 + 30,
-      ypos: this.y + this.height / -2 + 30,
-      tile: "body",
-      damage: 0,
-      maxDamage: 4,
-      neighborTiles: [3],
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    {
-      xoffset: this.width / -2 +60,
-      yoffset: this.height / -2+30,
-      xpos: this.x + this.width / -2 - 30,
-      ypos: this.y + this.height / -2 + 30,
+      xoffset: this.width / -2 - 60,
+      yoffset: this.height / -2 - 30,
+      xpos: this.x + this.width / -2 - 60,
+      ypos: this.y + this.height / -2 - 30,
       tile: "bot-right-indent",
+      damage: null,
+      maxDamage: null,
+      neighborTiles: [0, 4, 6],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //4
+    {
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2 - 30,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2 - 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 4, 6],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //5
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2 - 30,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2 - 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [1, 3, 5, 7],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //6
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 - 30,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2 - 30,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [2, 4, 8],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //7
+    {
+      xoffset: this.width / -2 + 60,
+      yoffset: this.height / -2 - 30,
+      xpos: this.x + this.width / -2 + 60,
+      ypos: this.y + this.height / -2 - 30,
+      tile: "bot-left-indent",
+      damage: null,
+      maxDamage: null,
+      neighborTiles: [2, 4, 8],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //middle row 3
+    //8
+    {
+      xoffset: this.width / -2 - 90,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 - 90,
+      ypos: this.y + this.height / -2,
+      tile: "bot-left",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [9],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //9
+    {
+      xoffset: this.width / -2 - 60,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 - 60,
+      ypos: this.y + this.height / -2,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [8, 15],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //10
+    {
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 - 30,
+      ypos: this.y + this.height / -2,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //11
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2,
+      ypos: this.y + this.height / -2,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [0, 2, 4],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //window
+    {
+      xoffset: this.width / -2,
+      yoffset: this.height / -2,
+      tile: "window",
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //12
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //13
+    {
+      xoffset: this.width / -2 + 60,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 + 30,
+      ypos: this.y + this.height / -2,
+      tile: "body",
+      damage: 0,
+      maxDamage: 4,
+      neighborTiles: [3],
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //14
+    {
+      xoffset: this.width / -2 + 90,
+      yoffset: this.height / -2,
+      xpos: this.x + this.width / -2 + 60,
+      ypos: this.y + this.height / -2,
+      tile: "bot-right",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [3],
@@ -204,10 +236,11 @@ function Freighter(x, y) {
       fireParticles: [],
     },
     //row5
+    //15
     {
       xoffset: this.width / -2 - 60,
-      yoffset: this.height / -2+60,
-      xpos: this.x + this.width / -2 - 30,
+      yoffset: this.height / -2 + 30,
+      xpos: this.x + this.width / -2 - 60,
       ypos: this.y + this.height / -2 + 30,
       tile: "bot-left",
       damage: 0,
@@ -216,9 +249,10 @@ function Freighter(x, y) {
       smokeParticles: [],
       fireParticles: [],
     },
+    //16
     {
       xoffset: this.width / -2 - 30,
-      yoffset: this.height / -2+60,
+      yoffset: this.height / -2 + 30,
       xpos: this.x + this.width / -2 - 30,
       ypos: this.y + this.height / -2 + 30,
       tile: "body",
@@ -228,23 +262,23 @@ function Freighter(x, y) {
       smokeParticles: [],
       fireParticles: [],
     },
-    //3
+    //17
     {
       xoffset: this.width / -2,
-      yoffset: this.height / -2+60,
+      yoffset: this.height / -2 + 30,
       xpos: this.x + this.width / -2,
       ypos: this.y + this.height / -2 + 30,
-      tile: "body-indent-bottom",
+      tile: "body-bot-indent",
       damage: 0,
       maxDamage: 4,
       neighborTiles: [0, 2, 4],
       smokeParticles: [],
       fireParticles: [],
     },
-    //4
+    //18
     {
       xoffset: this.width / -2 + 30,
-      yoffset: this.height / -2 +60,
+      yoffset: this.height / -2 + 30,
       xpos: this.x + this.width / -2 + 30,
       ypos: this.y + this.height / -2 + 30,
       tile: "body",
@@ -254,10 +288,11 @@ function Freighter(x, y) {
       smokeParticles: [],
       fireParticles: [],
     },
+    //19
     {
       xoffset: this.width / -2 + 60,
-      yoffset: this.height / -2+60,
-      xpos: this.x + this.width / -2 - 30,
+      yoffset: this.height / -2 + 30,
+      xpos: this.x + this.width / -2 + 60,
       ypos: this.y + this.height / -2 + 30,
       tile: "bot-right",
       damage: 0,
@@ -267,18 +302,20 @@ function Freighter(x, y) {
       fireParticles: [],
     },
     //booster row
+    //20
     {
-      xoffset: this.width / -2 -30,
-      yoffset: this.height / -2 + 90,
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2 + 60,
       tile: "booster",
       damage: null,
       maxDamage: null,
       smokeParticles: [],
       fireParticles: [],
     },
+    //21
     {
-      xoffset: this.width / -2 +30,
-      yoffset: this.height / -2 + 90,
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 + 60,
       tile: "booster",
       damage: null,
       maxDamage: null,
@@ -292,79 +329,13 @@ function Freighter(x, y) {
   }
 
   //update freighter position
-  this.update = function () {
+  this.update = function (playerYSpeed, playerXSpeed, playerYPos) {
     if (this.active) {
-      //horizontal speed
-      if ((!leftKey && !rightKey) || (leftKey && rightKey)) {
-        //slow down
-        this.xSpeed *= this.friction;
-        this.angle *= this.friction;
-      } else if (leftKey) {
-        //move right
-        if (this.xSpeed >= -this.maxSpeed) {
-          this.xSpeed -= this.acceleration;
-        }
-        if (this.angle >= -this.maxAngle) {
-          this.angle -= (0.5 * Math.PI) / 180;
-        }
-      } else if (rightKey) {
-        //move right
-        if (this.xSpeed <= this.maxSpeed) {
-          this.xSpeed += this.acceleration;
-        }
-        if (this.angle <= this.maxAngle) {
-          this.angle += (0.5 * Math.PI) / 180;
-        }
-      }
-      //vertical speed
-      if ((!upKey && !downKey) || (upKey && downKey)) {
-        //slow down
-        this.ySpeed *= this.friction;
-      } else if (upKey) {
-        //move up
-        if (this.ySpeed >= -this.maxSpeed) {
-          this.ySpeed -= this.acceleration;
-        }
-      } else if (downKey) {
-        //move down
-        if (this.ySpeed <= +this.maxSpeed) {
-          this.ySpeed += this.acceleration;
-        }
-      }
-
-      //move ship horizontal
-      if (
-        (this.x <= 80 && this.xSpeed > 0) ||
-        (this.x >= 640 && this.xSpeed < 0) ||
-        (this.x >= 80 && this.x <= 640)
-      ) {
-        this.x += this.xSpeed;
-      }
-
-      if (
-        (this.y <= 80 && this.ySpeed > 0) ||
-        (this.y >= 640 && this.ySpeed < 0) ||
-        (this.y >= 80 && this.y <= 640)
-      ) {
-        this.y += this.ySpeed;
-      }
-
-      // update variable values for html dom
-      document.getElementById("printAngle").innerHTML = this.angle;
-      document.getElementById("printySpeed").innerHTML = this.ySpeed;
-      document.getElementById("printxSpeed").innerHTML = this.xSpeed;
-      document.getElementById("printxpos").innerHTML = this.x;
-      document.getElementById("printypos").innerHTML = this.y;
-      // console.log(this.xSpeed);
-
-      //gain shield
-      this.shieldCounter = this.shieldCounter + 1;
-      if (this.shieldCounter > 100) {
-        //set time to next shield
-        this.shieldCounter = 0;
-        if (this.shieldValue < this.shieldMaxValue) {
-          this.shieldValue++;
-        }
+      this.x -= playerXSpeed * 0.75;
+      if (playerYSpeed > 0.5) {
+        this.y -= playerYSpeed * 0.2 - 0.4;
+      } else {
+        this.y -= playerYSpeed * 0.4 + 0.1;
       }
 
       // create particles
@@ -404,6 +375,7 @@ function Freighter(x, y) {
             life: this.random(this.smokeLife, 100),
           };
           tile.smokeParticles.push(smokeParticle);
+          // console.log(tile.smokeParticles.length);
         }
         // //create fire Particles
         while (tile.fireParticles.length < this.damage * this.damage) {
@@ -423,209 +395,46 @@ function Freighter(x, y) {
         }
       });
     }
-
-    bullets.forEach((bullet, index) => {
-      bullet.update();
-      if (
-        bullet.x < 0 ||
-        bullet.x > canvas.width ||
-        bullet.y < 0 ||
-        bullet.y > canvas.height
-      ) {
-        bullets.splice(index, 1); // Remove bullet if it goes out of bounds
-      }
-    });
   };
 
-  // turret variables
-  // let turretX = this.x;
-  // let turretY = this.y;
- // let angle = 0;
-  
-
-  // Bullet class
-  // class Bullet {
-  //   constructor(x, y, angle) {
-  //     this.xpos = x;
-  //     this.ypos = y;
-  //     this.angle = angle;
-  //     this.speed = 10;
-  //     this.damage = 1;
-  //   }
-
-  //   update() {
-  //     this.xpos += Math.cos(this.angle) * this.speed;
-  //     this.ypos += Math.sin(this.angle) * this.speed;
-  //   }
-
-  // }
-
-  // canvas.addEventListener("mousedown", () => {
-  //   bullets.push(new Bullet(this.x, this.y, angle));
-  //   console.log(angle);
-  // });
-
-  // //detect mouse pos
-  // canvas.addEventListener("mousemove", (e) => {
-  //   mouseX = e.clientX - canvas.offsetLeft;
-  //   mouseY = e.clientY - canvas.offsetTop;
-  //   angle = Math.atan2(mouseY - this.y, mouseX - this.x);
-  // });
-
   // draw
-  this.draw = function () {
+  this.draw = function (playerYSpeed, playerXSpeed) {
     //draw freighter ship
     freighterShipTiles.forEach((element) => {
       context.save();
-      context.fillStyle = "darkgrey";
+      context.fillStyle = "rgb(156, 157, 158)";
       context.translate(this.x, this.y);
       // this updates the position of each tile by adding its individual offset
       element.xpos = this.x + element.xoffset + this.width / 2;
       element.ypos = this.y + element.yoffset + this.height / 2;
-    //  context.rotate(this.angle);
+      //  context.rotate(this.angle);
 
       //draw tiles
       shiptilegraphics.draw(element.tile, element.xoffset, element.yoffset);
 
       //engine booster up down
       if (element.tile === "booster") {
-        // if (downKey === true) {
-        //   shiptilegraphics.drawbooster(
-        //     element.tileType,
-        //     element.xoffset,
-        //     element.yoffset,
-        //     "downKey"
-        //   );
-        // } else if (upKey === true) {
-        //   shiptilegraphics.drawbooster(
-        //     element.tileType,
-        //     element.xoffset,
-        //     element.yoffset,
-        //     "upKey"
-        //   );
-        // } else {
-          
-          shiptilegraphics.drawbooster(
-            element.tileType,
-            element.xoffset,
-            element.yoffset,
-            "noKey"
-          );
+        shiptilegraphics.drawbooster(
+          element.tileType,
+          element.xoffset,
+          element.yoffset,
+          "noKey"
+        );
         // }
       }
-      //booster right
-      // if (element.tile === "booster-right") {
-      //   if (leftKey === true) {
-      //     shiptilegraphics.drawbooster(
-      //       element.tileType,
-      //       element.xoffset,
-      //       element.yoffset,
-      //       "leftKey"
-      //     );
-      //   }
-      // }
-      // //booster left
-      // if (element.tile === "booster-left") {
-      //   if (rightKey === true) {
-      //     shiptilegraphics.drawbooster(
-      //       element.tileType,
-      //       element.xoffset,
-      //       element.yoffset,
-      //       "rightKey"
-      //     );
-      //   }
-      // }
 
       context.restore();
     });
 
-    //draw bullets
-    // bullets.forEach((bullet) => {
-    //   context.fillStyle = "red";
-    //   // context.save();
-    //   context.beginPath();
-    //   context.arc(bullet.xpos, bullet.ypos, 5, 0, Math.PI * 2);
-    //   context.fill();
-    //   context.restore();
-    // });
-
-    
-
-    // drawTurret
-  //   context.save();
-  //   context.translate(this.x, this.y);
-  //  // context.rotate(angle);
-  //   context.fillStyle = "#666";
-  //   context.fillRect(0, -3.5, 20, 7);
-  //   context.restore();
-  //   context.save();
-  //   context.translate(this.x, this.y);
-  //   context.fillStyle = "#666";
-  //   context.beginPath();
-  //   context.arc(0, 0, 10, 0, Math.PI * 2);
-  //   context.fill();
-  //   context.restore();
-
-    //draw shield
-    // if (this.shieldValue >= 1) {
-    //   context.strokeStyle = this.shieldColour;
-    //   context.beginPath();
-    //   context.globalAlpha = 0.7;
-    //   context.lineWidth = 2;
-    //   context.arc(this.x, this.y, 54, 0, 2 * Math.PI);
-    //   context.closePath();
-    //   context.stroke();
-    //   context.globalAlpha = 0.25;
-    //   context.beginPath();
-    //   context.lineWidth = 5;
-    //   context.arc(this.x, this.y, 51, 0, 2 * Math.PI);
-    //   context.closePath();
-    //   context.stroke();
-    //   context.globalAlpha = 1;
-    // }
-    // if (this.shieldValue >= 2) {
-    //   context.strokeStyle = this.shieldColour;
-    //   context.globalAlpha = 0.4;
-    //   context.beginPath();
-    //   context.lineWidth = 10;
-    //   context.arc(this.x, this.y, 50, 0, 2 * Math.PI);
-    //   context.closePath();
-    //   context.stroke();
-    //   context.globalAlpha = 0.2;
-    //   context.beginPath();
-    //   context.lineWidth = 4;
-    //   context.arc(this.x, this.y, 43, 0, 2 * Math.PI);
-    //   context.closePath();
-    //   context.stroke();
-    //   context.globalAlpha = 1;
-    // }
-    // if (this.shieldValue === 3) {
-    //   context.beginPath();
-    //   context.globalAlpha = 0.3;
-    //   context.fillStyle = this.shieldColour;
-    //   context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
-    //   context.fill();
-    //   context.globalAlpha = 1;
-    // }
-    // if (this.shieldValue === 4) {
-    //   context.beginPath();
-    //   context.globalAlpha = 0.3;
-    //   context.fillStyle = "yellow";
-    //   context.arc(this.x, this.y, 55, 0, 2 * Math.PI);
-    //   context.fill();
-    //   context.globalAlpha = 1;
-    // }
-
     // draw particles
     freighterShipTiles.forEach((tile) => {
-      this.damage = tile.damage;
       //draw smokeParticles
       for (let i = 0; i < tile.smokeParticles.length; i += 1) {
         p = tile.smokeParticles[i];
         if (this.x <= 80 || this.x >= 640) {
-          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed;
+          p.x = p.x + tile.xoffset / tile.xpos + this.xSpeed;
         } else {
-          p.x = p.x + tile.xoffset / tile.xpos - this.xSpeed / 2;
+          p.x = p.x + tile.xoffset / tile.xpos + this.xSpeed / 2;
         }
         if (this.y >= 640) {
           p.y = p.y + tile.yoffset / tile.ypos + 2 + this.ySpeed / 4;
@@ -661,67 +470,74 @@ function Freighter(x, y) {
       context.fillStyle = "red";
       context.fillRect(this.x - 2, this.y - 2, 4, 4);
       //draw damage value
-      this.array.forEach((element) => {
+      this.freighterShipTiles.forEach((element) => {
         if (element.damage !== null) {
-          context.save();
-          context.translate(this.x, this.y);
-       //   context.rotate(this.angle);
+          // context.save();
+          // context.translate(this.x, this.y);
+          // context.rotate(this.angle);
           context.fillStyle = "magenta";
-          context.fillText(
-            element.damage,
-            element.xoffset + 12,
-            element.yoffset + 17
-          );
-          context.restore();
+          context.fillText(element);
+          // context.restore();
         }
       });
     }
   };
 
   // freighter take damage
-  this.takeDamage = function (location, aDamage) {
-    this.shieldCounter = 0;
-    if (this.shieldValue >= 1) {
-      //console.log("shield hit!");
-      this.shieldValue = this.shieldValue - 1;
-      this.shieldColour = "red";
-      setTimeout(() => {
-        this.shieldColour = "lightblue";
-      }, 100);
-      setTimeout(() => {
-        this.shieldColour = "red";
-      }, 300);
-      setTimeout(() => {
-        this.shieldColour = "lightblue";
-      }, 400);
-      setTimeout(() => {
-        this.shieldColour = "red";
-      }, 600);
-      setTimeout(() => {
-        this.shieldColour = "lightblue";
-      }, 700);
-    } else {
+  this.takeDamage = function (location, damageAmount) {
+    // console.log(this.shieldValue);
+    // this.shieldCounter = 0;
+    // if (this.shieldValue >= 1) {
+    //   //console.log("shield hit!");
+    //   this.shieldValue = this.shieldValue - 1;
+    //   this.shieldColour = "red";
+    //   setTimeout(() => {
+    //     this.shieldColour = "lightblue";
+    //   }, 100);
+    //   setTimeout(() => {
+    //     this.shieldColour = "red";
+    //   }, 300);
+    //   setTimeout(() => {
+    //     this.shieldColour = "lightblue";
+    //   }, 400);
+    //   setTimeout(() => {
+    //     this.shieldColour = "red";
+    //   }, 600);
+    //   setTimeout(() => {
+    //     this.shieldColour = "lightblue";
+    //   }, 700);
+    // } else {
+    console.log("freighter hit! [location: " + location + "]");
+    if (
+      freighterShipTiles[location].damage <
+      freighterShipTiles[location].maxDamage
+    ) {
+      freighterShipTiles[location].damage =
+        freighterShipTiles[location].damage + damageAmount;
+    } else if (
+      (freighterShipTiles[location].damage =
+        freighterShipTiles[location].maxDamage)
+    ) {
+      getRandomNeighborTile = Math.floor(
+        Math.random() * freighterShipTiles[location].neighborTiles.length
+      );
+      neighborTile =
+        freighterShipTiles[location].neighborTiles[getRandomNeighborTile];
       if (
-        freighterShipTiles[location].damage < freighterShipTiles[location].maxDamage
+        freighterShipTiles[neighborTile].damage <
+        freighterShipTiles[neighborTile].maxDamage
       ) {
-        freighterShipTiles[location].damage =
-          freighterShipTiles[location].damage + aDamage;
-      } else if (
-        (freighterShipTiles[location].damage = freighterShipTiles[location].maxDamage)
-      ) {
-        getRandomNeighborTile = Math.floor(
-          Math.random() * freighterShipTiles[location].neighborTiles.length
-        );
-        neighborTile =
-          freighterShipTiles[location].neighborTiles[getRandomNeighborTile];
-        if (
-          freighterShipTiles[neighborTile].damage <
-          freighterShipTiles[neighborTile].maxDamage
-        ) {
-          freighterShipTiles[neighborTile].damage =
-            freighterShipTiles[neighborTile].damage + aDamage;
-        }
+        freighterShipTiles[neighborTile].damage =
+          freighterShipTiles[neighborTile].damage + damageAmount;
       }
     }
+    console.log(
+      "freighter hit! [location: " +
+        location +
+        "] tiledamage: " +
+        freighterShipTiles[location].damage
+    );
+
+    //}
   };
 }

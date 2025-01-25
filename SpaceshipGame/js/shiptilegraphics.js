@@ -28,16 +28,7 @@ function Shiptilegraphics() {
       context.lineTo(x, y + 30);
       context.closePath();
       context.fill();
-    } else if (tile === "body-indent-bottom") {
-      context.beginPath();
-      //context.fillStyle = "lightgrey";
-      context.lineTo(x, y);
-      context.lineTo(x + 30, y);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x + 15, y + 25);
-      context.lineTo(x, y + 30);
-      context.closePath();
-      context.fill();
+    } else if (tile === "window") {
       context.beginPath();
       context.fillStyle = "black";
       context.lineTo(x + 3, y + 5);
@@ -47,7 +38,17 @@ function Shiptilegraphics() {
       context.lineTo(x + 2, y + 15);
       context.closePath();
       context.fill();
-    } else if (tile === "wing-left") {
+    } else if (tile === "body-bot-indent") {
+      context.beginPath();
+      //context.fillStyle = "lightgrey";
+      context.lineTo(x, y);
+      context.lineTo(x + 30, y);
+      context.lineTo(x + 30, y + 30);
+      context.lineTo(x + 15, y + 25);
+      context.lineTo(x, y + 30);
+      context.closePath();
+      context.fill();
+    } else if (tile === "top-left") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x + 5, y + 5);
@@ -56,7 +57,7 @@ function Shiptilegraphics() {
       context.lineTo(x, y + 30);
       context.closePath();
       context.fill();
-    } else if (tile === "wing-right") {
+    } else if (tile === "top-right") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
@@ -83,7 +84,7 @@ function Shiptilegraphics() {
       context.lineTo(x, y + 30);
       context.closePath();
       context.fill();
-    } else if (tile === "bot-left-indent") {
+    } else if (tile === "bot-right-indent") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x + 30, y + 30);
@@ -92,7 +93,7 @@ function Shiptilegraphics() {
       context.lineTo(x, y + 30);
       context.closePath();
       context.fill();
-    } else if (tile === "bot-right-indent") {
+    } else if (tile === "bot-left-indent") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);

@@ -110,9 +110,6 @@ function Asteroids() {
       asteroidXSpeed = -shipXSpeed;
     }
 
-    // if (shipYPos >= 640 && shipYSpeed >= 2) {
-    //   asteroidYSpeed = -shipYSpeed +7;}
-    // else 
     if (shipYSpeed <= 0.5 && shipYSpeed >= -1 && shipYPos < 640) {
       asteroidYSpeed = -shipYSpeed + 4;
     } 
