@@ -6,8 +6,8 @@ function Shiptilegraphics() {
       context.lineTo(x + 2, y + 8);
       context.lineTo(x + 15, y);
       context.lineTo(x + 28, y + 8);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x, y + 30);
+      context.lineTo(x + 31, y + 31);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
       context.beginPath();
@@ -23,9 +23,9 @@ function Shiptilegraphics() {
       context.beginPath();
       ////context.fillStyle = "lightgrey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x, y + 30);
+      context.lineTo(x + 31, y);
+      context.lineTo(x + 31, y + 31);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "window") {
@@ -42,19 +42,19 @@ function Shiptilegraphics() {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
-      context.lineTo(x + 30, y + 30);
+      context.lineTo(x + 31, y);
+      context.lineTo(x + 31, y + 31);
       context.lineTo(x + 15, y + 25);
-      context.lineTo(x, y + 30);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "top-left") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x + 5, y + 5);
-      context.lineTo(x + 30, y);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x, y + 30);
+      context.lineTo(x + 31, y);
+      context.lineTo(x + 31, y + 31);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "top-right") {
@@ -62,16 +62,16 @@ function Shiptilegraphics() {
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
       context.lineTo(x + 25, y + 5);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x, y + 30);
+      context.lineTo(x + 31, y + 31);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "bot-left") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
-      context.lineTo(x + 30, y + 30);
+      context.lineTo(x + 31, y);
+      context.lineTo(x + 31, y + 31);
       context.lineTo(x + 5, y + 25);
       context.closePath();
       context.fill();
@@ -79,26 +79,26 @@ function Shiptilegraphics() {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 25, y + 25);
-      context.lineTo(x, y + 30);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "bot-right-indent") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y + 31);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 25, y + 25);
-      context.lineTo(x, y + 30);
+      context.lineTo(x, y + 31);
       context.closePath();
       context.fill();
     } else if (tile === "bot-left-indent") {
       context.beginPath();
       //context.fillStyle = "lightgrey";
       context.lineTo(x, y);
-      context.lineTo(x, y + 30);
-      context.lineTo(x + 30, y + 30);
+      context.lineTo(x, y + 31);
+      context.lineTo(x + 31, y + 31);
       context.lineTo(x + 5, y + 25);
       context.closePath();
       context.fill();
@@ -121,7 +121,7 @@ function Shiptilegraphics() {
       context.beginPath();
       context.fillStyle = "grey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 29, y + 5);
       context.lineTo(x + 1, y + 5);
       context.closePath();
@@ -154,7 +154,7 @@ function Shiptilegraphics() {
       context.fill();
       context.fillStyle = "orange";
       context.beginPath();
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 25, y + 15);
       context.lineTo(x + 15, y + 28);
       context.lineTo(x + 5, y + 15);
@@ -174,7 +174,7 @@ function Shiptilegraphics() {
       context.beginPath();
       context.fillStyle = "grey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 29, y + 5);
       context.lineTo(x + 1, y + 5);
       context.closePath();
@@ -188,7 +188,7 @@ function Shiptilegraphics() {
         context.lineTo(x + 29, y + 5);
         context.lineTo(x + 27, y + 18);
         context.lineTo(x + 23, y + 25);
-        context.lineTo(x + 15, y + 30);
+        context.lineTo(x + 15, y + 31);
         context.lineTo(x + 7, y + 25);
         context.lineTo(x + 3, y + 18);
         context.lineTo(x + 1, y + 5);
@@ -220,7 +220,7 @@ function Shiptilegraphics() {
       context.beginPath();
       context.fillStyle = "grey";
       context.lineTo(x, y);
-      context.lineTo(x + 30, y);
+      context.lineTo(x + 31, y);
       context.lineTo(x + 29, y + 5);
       context.lineTo(x + 1, y + 5);
       context.closePath();
@@ -230,9 +230,9 @@ function Shiptilegraphics() {
     if (keyState == "rightKey") {
       context.fillStyle = "orange";
       context.beginPath();
-      context.lineTo(x + 33, y + 15);
-      context.lineTo(x + 30, y + 30);
-      context.lineTo(x + 10, y + 25);
+      context.lineTo(x +10, y - 4);
+      context.lineTo(x + 25, y -1);
+      context.lineTo(x + 14, y + 10);
       context.closePath();
       context.fill();
     }
@@ -240,9 +240,9 @@ function Shiptilegraphics() {
     if (keyState == "leftKey") {
       context.fillStyle = "orange";
       context.beginPath();
-      context.lineTo(x - 3, y + 15);
-      context.lineTo(x, y + 30);
-      context.lineTo(x + 20, y + 25);
+      context.lineTo(x +20, y -4);
+      context.lineTo(x +5, y -1);
+      context.lineTo(x + 16, y + 10);
       context.closePath();
       context.fill();
     }

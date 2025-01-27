@@ -32,34 +32,25 @@ function Player(x, y) {
       tile: "nose",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [3],
+      neighborTiles: [2],
       smokeParticles: [],
       fireParticles: [],
     },
     //middle row 1
-    {
-      xoffset: this.width / -2 - 60,
-      yoffset: this.height / -2,
-      tile: "booster-left",
-      damage: null,
-      maxDamage: null,
-      smokeParticles: [],
-      fireParticles: [],
-    },
-    //2
+    //1
     {
       xoffset: this.width / -2 - 30,
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 - 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "top-left",
+      tile: "bot-left",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [3],
+      neighborTiles: [2],
       smokeParticles: [],
       fireParticles: [],
     },
-    //3
+    //2
     {
       xoffset: this.width / -2,
       yoffset: this.height / -2,
@@ -68,38 +59,49 @@ function Player(x, y) {
       tile: "body",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [0, 2, 4],
+      neighborTiles: [0, 1, 3],
       smokeParticles: [],
       fireParticles: [],
     },
-    //4
+    //3
     {
       xoffset: this.width / -2 + 30,
       yoffset: this.height / -2,
       xpos: this.x + this.width / -2 + 30,
       ypos: this.y + this.height / -2 + 30,
-      tile: "top-right",
+      tile: "bot-right",
       damage: 0,
       maxDamage: 4,
-      neighborTiles: [3],
+      neighborTiles: [2],
       smokeParticles: [],
       fireParticles: [],
     },
-    //5
+    //bottom row 6
+    //4
     {
-      xoffset: this.width / -2 + 60,
-      yoffset: this.height / -2,
-      tile: "booster-right",
+      xoffset: this.width / -2 - 30,
+      yoffset: this.height / -2 +30,
+      tile: "booster-left",
       damage: null,
       maxDamage: null,
       smokeParticles: [],
       fireParticles: [],
     },
-    //bottom row 6
+    //5
     {
       xoffset: this.width / -2,
       yoffset: this.height / -2 + 30,
       tile: "booster",
+      damage: null,
+      maxDamage: null,
+      smokeParticles: [],
+      fireParticles: [],
+    },
+    //6
+    {
+      xoffset: this.width / -2 + 30,
+      yoffset: this.height / -2 +30,
+      tile: "booster-right",
       damage: null,
       maxDamage: null,
       smokeParticles: [],
@@ -481,22 +483,40 @@ function Player(x, y) {
       //draw centre pivot point of ship
       context.fillStyle = "red";
       context.fillRect(this.x - 2, this.y - 2, 4, 4);
-      //draw damage value
-      // this.array.forEach((element) => {
-      //   if (element.damage !== null) {
-      //     context.save();
-      //     context.translate(this.x, this.y);
-      //     context.rotate(this.angle);
-      //     context.fillStyle = "magenta";
-          // context.fillText(
-          //   element.damage,
-          //   element.xoffset + 12,
-          //   element.yoffset + 17
-          // );
-          // context.restore();
-        // }
-      // });
+      //draw tile numbers
+      var countE = -1;
+      playerShipTiles.forEach((element) => {
+        countE = countE + 1;
+        context.save();
+        context.translate(this.x, this.y);
+        context.fillStyle = "magenta";
+        context.fillText(countE, element.xoffset + 12, element.yoffset + 17);
+        context.restore();
+      });
     }
+  
+
+    // //DEV INFO
+    // if (showDevInfo == true) {
+    //   //draw centre pivot point of ship
+    //   context.fillStyle = "red";
+    //   context.fillRect(this.x - 2, this.y - 2, 4, 4);
+    //   //draw damage value
+    //   // this.array.forEach((element) => {
+    //   //   if (element.damage !== null) {
+    //   //     context.save();
+    //   //     context.translate(this.x, this.y);
+    //   //     context.rotate(this.angle);
+    //   //     context.fillStyle = "magenta";
+    //       // context.fillText(
+    //       //   element.damage,
+    //       //   element.xoffset + 12,
+    //       //   element.yoffset + 17
+    //       // );
+    //       // context.restore();
+    //     // }
+    //   // });
+    // }
 
   };
 

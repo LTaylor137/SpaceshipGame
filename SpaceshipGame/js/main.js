@@ -31,7 +31,7 @@ window.onload = function () {
   context = canvas.getContext("2d");
   setupInputs();
   //create objects
-  player = new Player(150, 600);
+  player = new Player(350, 400);
   freighter = new Freighter(350, 600);
   shiptilegraphics = new Shiptilegraphics();
   stars = new Stars();
